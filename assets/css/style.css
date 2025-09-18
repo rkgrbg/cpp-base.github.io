@@ -191,3 +191,19 @@ pre{ margin:0; }
 .tok-num  { color:#f97316; }                       /* orange */
 .tok-pp   { color:#e11d48; font-weight:700; }      /* rose */
 .tok-comm { color:#94a3b8; font-style:italic; }    /* slate */
+
+/* --- Scroll fix for long code blocks --- */
+.modal-dialog{
+  max-height: min(88vh, 100dvh - 6vh);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+#modalPre{
+  max-height: clamp(260px, 62vh, 860px);
+  overflow: auto;                 /* vertical + horizontal */
+  -webkit-overflow-scrolling: touch; /* iOS momentum scroll */
+}
+.codeblock{
+  white-space: pre;               /* keep long lines; enable horizontal scroll */
+  overflow: auto;
+}
