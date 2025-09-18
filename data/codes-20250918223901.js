@@ -23,7 +23,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int h, m, s;
     int start = 0, end = 0;
@@ -69,7 +69,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int n;
     cin >> n;
@@ -178,7 +178,7 @@ int main()
 { 
     int i, j, k, l = 0, i1, i2, t1, t2; 
     cin.tie(0); 
- ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
     
     
     int n;
@@ -225,7 +225,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int n;
     cin >> n;
@@ -328,7 +328,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int n;
     cin >> n;
@@ -376,7 +376,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int n;
     while(cin >> n){
@@ -448,7 +448,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     fibonacci_sequence[0] = "0";
     fibonacci_sequence[1] = "1";
@@ -483,7 +483,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     while(cin >> k && k){
         cout << "f91(" << k << ") = " << f91(k) << "\n";
@@ -536,7 +536,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     cin.tie(0);
-	ios_base::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
 
     int n;
     cin >> n;
@@ -571,7 +571,7 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     //cin.tie(0);
-	//ios_base::sync_with_stdio(false);
+    //ios_base::sync_with_stdio(false);
 
     double p1, p2;
     cout << "Original price:\n";
@@ -859,12 +859,12 @@ struct Point
 
 
 float a(vector<Point> &p){
-	float area = 0.0;
-	for (int i=p.size()-1, j=0; j<p.size(); i=j++)
-	{
-		area += p[i].x * p[j].y;
-		area -= p[i].y * p[j].x;
-	}
+    float area = 0.0;
+    for (int i=p.size()-1, j=0; j<p.size(); i=j++)
+    {
+        area += p[i].x * p[j].y;
+        area -= p[i].y * p[j].x;
+    }
     return float(fabs(area) / 2.0);
 }
 
