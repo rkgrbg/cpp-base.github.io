@@ -86,7 +86,7 @@ int main()
     for(i=0;i<n;i++){
         cout << info[i] << " ";
     }
-    cout << "\n";
+    cout << "\\n";
 
     int wor = -1, bes = -1;
     bool fbes = false;
@@ -99,11 +99,11 @@ int main()
         }
     }
 
-    if(wor != -1) cout << wor << "\n";
-    else cout << "best case\n";
+    if(wor != -1) cout << wor << "\\n";
+    else cout << "best case\\n";
 
-    if(bes != -1) cout << bes << "\n";
-    else cout << "worst case\n";
+    if(bes != -1) cout << bes << "\\n";
+    else cout << "worst case\\n";
 
     
 
@@ -235,21 +235,21 @@ int main()
         cin >> k;
 
         if(k==1){
-            cout << 4 << "\n";
+            cout << 4 << "\\n";
             continue;
         }
 
         if(k%2 == 0){
             for(i = int(pow(10,(k/2)-1) * 4.462224f);i > 0;i+=2){ //sqrt(20)
                 if(ct(i*i)){
-                    cout << i*i << "\n";
+                    cout << i*i << "\\n";
                     break;
                 }
             }
         }else{
             for(i = int(pow(10,(k-1)/2) * 1.404204f);i > 0;i+=2){ //sqrt(2)
                 if(ct(i*i)){
-                    cout << i*i << "\n";
+                    cout << i*i << "\\n";
                     break;
                 }
             }
@@ -348,7 +348,7 @@ int main()
     cin >> now_ymd.y >> c >> now_ymd.m >> c >> now_ymd.d;
 
     now_ymd = date(now_ymd, days);
-    cout << setw(2) << setfill('0') << now_ymd.y << "/" << setw(2) << setfill('0') << now_ymd.m << "/" << setw(2) << setfill('0') << now_ymd.d << "\n";
+    cout << setw(2) << setfill('0') << now_ymd.y << "/" << setw(2) << setfill('0') << now_ymd.m << "/" << setw(2) << setfill('0') << now_ymd.d << "\\n";
 
     return 0;
 }`
@@ -380,7 +380,7 @@ int main()
 
     int n;
     while(cin >> n){
-        cout << f(n) << "\n";
+        cout << f(n) << "\\n";
     }
     
 
@@ -456,7 +456,7 @@ int main()
 
     ll n;
     while(cin >> n){
-        cout << f(n) << "\n";
+        cout << f(n) << "\\n";
     }
     
 
@@ -486,7 +486,7 @@ int main()
     ios_base::sync_with_stdio(false);
 
     while(cin >> k && k){
-        cout << "f91(" << k << ") = " << f91(k) << "\n";
+        cout << "f91(" << k << ") = " << f91(k) << "\\n";
     }
     
 
@@ -512,7 +512,7 @@ void move(int n, char from, char to, char by){
         return;
 
     move(n-1, from, by, to);
-    cout << "ring " << n << " : " << from << " => " << to << "\n";
+    cout << "ring " << n << " : " << from << " => " << to << "\\n";
     cnt++;
     move(n-1, by, to, from);
     return;
@@ -525,7 +525,7 @@ void distribute(int n, char from, char to, char by){
     if(n <= 0)
         return;
     move(n-1, from, by, to);
-    cout << "ring " << n << " : " << from << " => " << to << "\n";
+    cout << "ring " << n << " : " << from << " => " << to << "\\n";
     cnt++;
     distribute(n-2, by, from, to);
     return;
@@ -543,7 +543,7 @@ int main()
 
     distribute(n, 'A', 'C', 'B');
 
-    cout << "共需" << cnt << "個移動\n";
+    cout << "共需" << cnt << "個移動\\n";
     
 
     return 0;
@@ -571,14 +571,14 @@ int main()
 {
     int i, j, k, l = 0, i1, i2, t1, t2;
     //cin.tie(0);
-    //ios_base::sync_with_stdio(false);
+	//ios_base::sync_with_stdio(false);
 
     double p1, p2;
-    cout << "Original price:\n";
+    cout << "Original price:" << endl;
     cin >> p1 >> p2;
     discount(p1, p2);
-    cout << "Price after discount:\n";
-    cout << p1 << " " << p2 << "\n";
+    cout << "Price after discount:" << endl;
+    cout << p1 << " " << p2 << endl;
     
 
     return 0;
@@ -634,11 +634,11 @@ int main()
         }
     
         if(!ce && !re){
-            cout << "OK\n";
+            cout << "OK\\n";
         }else if(ce == 1 && re == 1){
-            cout << "Change bit (" << ces << "," << res << ")\n";
+            cout << "Change bit (" << ces << "," << res << ")\\n";
         }else{
-            cout << "Corrupt\n";
+            cout << "Corrupt\\n";
         }
     }
 
@@ -797,7 +797,7 @@ int main(){
         getline(cin, str);
 
         if(str[0] != '0' && str[0] != '1'){
-            cout << "-1\n";
+            cout << "-1\\n";
             continue;
         }
         bool nv = !(str[0]-'0');
@@ -807,7 +807,7 @@ int main(){
         for(auto c : str){
             if(c != '0' && c != '1'){
                 err = true;
-                cout << "-1\n";
+                cout << "-1\\n";
                 break;
             }
             if(c-'0' == nv && data_alive && time.count()<3){
@@ -834,7 +834,7 @@ int main(){
 
         for(i=0;i<res.size();i+=4) cout << res[i] << res[i+1] << res[i+2] << res[i+3] << " ";
 
-        cout << int(float(res.size()) / float(str.size()) *100 +0.5) << "%\n";
+        cout << int(float(res.size()) / float(str.size()) *100 +0.5) << "%\\n";
     }
 
 
@@ -969,19 +969,19 @@ int main(){
         if(point[list[who]] > 99){
             switch(list[who]){
                 case 0:{
-                    cout << "A\n";
+                    cout << "A\\n";
                     break;
                 }
                 case 1:{
-                    cout << "B\n";
+                    cout << "B\\n";
                     break;
                 }
                 case 2:{
-                    cout << "C\n";
+                    cout << "C\\n";
                     break;
                 }
                 case 3:{
-                    cout << "D\n";
+                    cout << "D\\n";
                     break;
                 }
             }
@@ -992,19 +992,19 @@ int main(){
         if(info[list[who]].empty()){
             switch(list[who]){
                 case 0:{
-                    cout << "A\n";
+                    cout << "A\\n";
                     break;
                 }
                 case 1:{
-                    cout << "B\n";
+                    cout << "B\\n";
                     break;
                 }
                 case 2:{
-                    cout << "C\n";
+                    cout << "C\\n";
                     break;
                 }
                 case 3:{
-                    cout << "D\n";
+                    cout << "D\\n";
                     break;
                 }
             }
@@ -1303,7 +1303,7 @@ int main(){
         }
 
 
-        cout << cnt << "\n";
+        cout << cnt << "\\n";
 
     }
 
@@ -1358,7 +1358,7 @@ int main(){
 
 
 
-        cout << nl << "\n";
+        cout << nl << "\\n";
     }
 
 
@@ -1628,7 +1628,7 @@ int main(){
             }
         }
 
-        cout << cnt << "\n";
+        cout << cnt << "\\n";
 
 
         vis.reset();
@@ -1781,7 +1781,7 @@ int main(){
     bool first_case = true;
     while(getline(cin, s)){
 
-        if(!first_case) cout << "\n";
+        if(!first_case) cout << "\\n";
         first_case = 0;
 
         sort(s.begin(), s.end());
@@ -1799,7 +1799,7 @@ int main(){
         sort(items.begin(), items.end(), cmp);
 
         for(auto p : items){
-            cout << int(p.second) << " " << p.first << "\n";
+            cout << int(p.second) << " " << p.first << "\\n";
         }
 
     }
@@ -1858,7 +1858,7 @@ int main(){
         
     }
 
-    cout << ((value[t1] > value[t2]) ? t1 : t2) << "\n";
+    cout << ((value[t1] > value[t2]) ? t1 : t2) << "\\n";
     
     sort(balls.begin(),balls.end());
 
@@ -2008,7 +2008,7 @@ int main(){
             }
         }
 
-        cout << cnt << "\n";
+        cout << cnt << "\\n";
 
     }
 
@@ -2060,10 +2060,10 @@ int main(){
         
 
         if(ans < 0)
-            cout << "Case #" << l << ": The maximum product is " << 0 << ".\n\n";
+            cout << "Case #" << l << ": The maximum product is " << 0 << ".\\n\\n";
         
         else
-            cout << "Case #" << l << ": The maximum product is " << ans << ".\n\n";
+            cout << "Case #" << l << ": The maximum product is " << ans << ".\\n\\n";
     }
 
     return 0;
@@ -2111,10 +2111,10 @@ int main(){
         
 
         if(ans < 0)
-            cout << "Case #" << l << ": The maximum product is " << 0 << ".\n\n";
+            cout << "Case #" << l << ": The maximum product is " << 0 << ".\\n\\n";
         
         else
-            cout << "Case #" << l << ": The maximum product is " << ans << ".\n\n";
+            cout << "Case #" << l << ": The maximum product is " << ans << ".\\n\\n";
     }
 
     return 0;
@@ -2239,7 +2239,7 @@ int main(){
         if(rt(p2) == 2) cout << p2 << " " << p2 << " ";
         if(rt(p2) == 1) cout << p2 << " ";
         if(rt(p3)) cout << p3 << " ";
-        cout << "\n";
+        cout << "\\n";
 
     }
     
@@ -2293,14 +2293,14 @@ int main()
             cout << setw(5) << setfill('0') << a
                  << " / "
                  << setw(5) << setfill('0') << f
-                 << " = " << n << "\n";
+                 << " = " << n << "\\n";
             pr = 1;
         }
 
         if(!pr)
-            cout << "There are no solutions for " << n << ".\n";
+            cout << "There are no solutions for " << n << ".\\n";
 
-        cout << "\n";
+        cout << "\\n";
 
     }
 
@@ -2351,7 +2351,7 @@ int main(){
             cost += t1 + t2;
         }
 
-        cout << cost << "\n";
+        cout << cost << "\\n";
     }
 
     return 0;
