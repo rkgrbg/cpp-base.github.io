@@ -2,7 +2,7 @@
 window.CPP_CODE_DATA = {
   categories: [
     { id: "sctb", name: "學校課本" },
-    { id: "ds",   name: "資料結構" },
+    { id: "schw",   name: "學校作業" },
     { id: "tpl",  name: "模板 / 工具" }
   ],
   items: [
@@ -115,7 +115,7 @@ int main()
       title: "習題01-3 雪花片片",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-09-18",
-      tags: ["基礎", "107資能競賽", "大樹運算"],
+      tags: ["基礎", "107資能競賽", "大數運算"],
       code:
 `#include <bits/stdc++.h> 
 using namespace std; 
@@ -703,7 +703,7 @@ int main()
     },
     {
       category: "sctb",
-      title: "習題05-1 祕宓差",
+      title: "習題05-1 秘密差",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-09-18",
       tags: ["基礎", "APCS 2017-03-01"],
@@ -859,12 +859,12 @@ struct Point
 
 
 float a(vector<Point> &p){
-    float area = 0.0;
-    for (int i=p.size()-1, j=0; j<p.size(); i=j++)
-    {
-        area += p[i].x * p[j].y;
-        area -= p[i].y * p[j].x;
-    }
+	float area = 0.0;
+	for (int i=p.size()-1, j=0; j<p.size(); i=j++)
+	{
+		area += p[i].x * p[j].y;
+		area -= p[i].y * p[j].x;
+	}
     return float(fabs(area) / 2.0);
 }
 
@@ -886,7 +886,7 @@ int main(){
         p.push_back({f1,f2});
     }
 
-    cout << float(a(p));
+    cout << fixed << setprecision(2) << float(a(p));
 
     return 0;
 }`
@@ -909,28 +909,50 @@ int main(){
     int i, j, k, l = 0, i1, i2, t1, t2;
 
     queue<char> info[4];
-    
+    vector<int> list;
 
     for(i=0;i<4;i++){
         string s;
         cin >> s;
+
+        int ipid;
+        switch(s[0]){
+            case 'A':{
+                ipid = 0;
+                break;
+            }
+            case 'B':{
+                ipid = 1;
+                break;
+            }
+            case 'C':{
+                ipid = 2;
+                break;
+            }
+            case 'D':{
+                ipid = 3;
+                break;
+            }
+        }
+
+        list.push_back(ipid);
+
         for(j=0;j<13;j++){
             cin >> s;
-            if(s != "10") info[i].push(s[0]);
-            else info[i].push('0');
+            if(s != "10") info[ipid].push(s[0]);
+            else info[ipid].push('0');
         }
     }
 
 
-    vector<int> list = {0, 1, 2, 3};
     int who = 0;
 
-    int point[4] = {0};
+    int point = 0;
 
     while(1){
         switch(info[list[who]].front()){
             case 'A':{
-                point[list[who]] = 0;
+                point = 0;
                 break;
             }
             case '4':{
@@ -942,31 +964,31 @@ int main(){
                 break;
             }
             case '0':{ //10
-                if(point[list[who]] + 10 > 99) point[list[who]] -= 10;
-                else point[list[who]] += 10;
+                if(point + 10 > 99) point -= 10;
+                else point += 10;
                 break;
             }
             case 'J':{
                 break;
             }
             case 'Q':{
-                if(point[list[who]] + 20 > 99) point[list[who]] -= 20;
-                else point[list[who]] += 20;
+                if(point + 20 > 99) point -= 20;
+                else point += 20;
                 break;
             }
             case 'K':{
-                point[list[who]] = 99;
+                point = 99;
                 break;
             }
             default:{
-                point[list[who]] += info[list[who]].front() - '0';
+                point += info[list[who]].front() - '0';
             }
         }
 
         info[list[who]].pop();
 
 
-        if(point[list[who]] > 99){
+        if(point > 99){
             switch(list[who]){
                 case 0:{
                     cout << "A\\n";
@@ -1008,7 +1030,7 @@ int main(){
                     break;
                 }
             }
-            cout << point[list[who]];
+            cout << point;
             break;
         }
 
@@ -2461,6 +2483,1450 @@ int main()
     }
 
     cout << l;
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "0前測 01 空氣盒子",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "108資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+
+using namespace std;
+
+struct state
+{
+    int first_day;
+    int last_day;
+    int value;
+};
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    //cin.tie(0);
+    //ios_base::sync_with_stdio(false);
+
+    vector<int> info;
+
+    while( cin >> k ){
+        info.push_back(k);
+    }
+
+    int b, e;
+    int n = info[0];
+    bool data_alive = false;
+
+    vector<state> ans;
+
+    for(i=1;i<info.size();i++){
+        if(info[i] > n){
+            b = i;
+            e = i;
+            data_alive = true;
+        }else if( info[i] == n && data_alive){
+            e = i;
+        }else if(data_alive){
+            data_alive = false;
+            ans.push_back({b, e, info[i-1]});
+        }
+        n = info[i];
+    }
+
+    for(i=0;i<ans.size();i++){
+        if(ans[i].first_day == ans[i].last_day){
+            cout << ans[i].first_day+1 << " " << ans[i].value << "\\n";
+        }else{
+            cout << ans[i].first_day+1 << " " << ans[i].last_day+1 << " " << ans[i].value << "\\n";
+        }
+    }
+
+    if(ans.size() == 0){
+        cout << "0 0\\n";
+    }
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "0前測 02 成績排名",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "110資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int i, j, k, l = 0;
+    //cin.tie(0);
+    //ios_base::sync_with_stdio(false);
+
+    int n;
+    cin >> n;
+
+    vector<pair<int, int>> info;
+
+    for(i=0;i<n;i++){
+        cin >> k;
+        info.push_back({k, i});
+    }
+    
+    sort(info.begin(), info.end(), greater<pair<int,int>>());
+
+    int ns = INT_MAX;
+    int p = 0;
+    int ans[10000];
+
+    for(i=0;i<n;i++){
+        if(info[i].first != ns){
+            p++;
+            ans[info[i].second] = p;
+            ns = info[i].first;
+        }else{
+            ans[info[i].second] = p;
+        }
+    }
+
+    for(i=0;i<n;i++){
+        cout << ans[i] << " ";
+    }
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "1字串 01 秘密差",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "APCS 2017-03-01"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    string num;
+    cin >> num;
+
+    bool dou = false;
+    ll ans=0;
+    for(auto c : num){
+        if(dou) ans += c -'0';
+        else ans -= c -'0';
+        dou = !dou;
+    }
+
+    cout << abs(ans);
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "1字串 02 ROT13",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    string str;
+    getline(cin, str);
+
+    for(int i=0;i<str.size();i++){
+        if(isupper(str[i])) str[i] = char((str[i] - 'A' + 13)%26 + 'A');
+        else if(islower(str[i])) str[i] = char((str[i] - 'a' + 13)%26 + 'a');
+    }
+
+    cout << str;
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "1字串 03 跑長編碼與資料壓縮",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "160資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    int n;
+    cin >> n;
+    cin.ignore();
+    while(n--){
+
+        string str;
+        bool err = false;
+        getline(cin, str);
+
+        if(str[0] != '0' && str[0] != '1'){
+            cout << "-1\\n";
+            continue;
+        }
+        bool nv = !(str[0]-'0');
+        bitset<3> time;
+        vector<bool> res;
+        bool data_alive = false;
+        for(auto c : str){
+            if(c != '0' && c != '1'){
+                err = true;
+                cout << "-1\\n";
+                break;
+            }
+            if(c-'0' == nv && data_alive && time.count()<3){
+                unsigned long val = time.to_ulong();
+                val++;
+                time = bitset<3>(val);
+            }else{
+                if(time.count() != 0){
+                    res.push_back(nv);
+                    res.push_back(time[2]);
+                    res.push_back(time[1]);
+                    res.push_back(time[0]);
+                }
+                nv = c - '0';
+                time = bitset<3>(1);
+                data_alive = true;
+            }
+        }
+        if(err) continue;
+        res.push_back(nv);
+        res.push_back(time[2]);
+        res.push_back(time[1]);
+        res.push_back(time[0]);
+
+        for(i=0;i<res.size();i+=4) cout << res[i] << res[i+1] << res[i+2] << res[i+3] << " ";
+
+        cout << int(float(res.size()) / float(str.size()) *100 +0.5) << "%\\n";
+    }
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "1字串 04 計算字串間隔距離",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "105資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    string str;
+    cin >> str;
+
+    char target, otc;
+    cin >> target;
+    if(isupper(target)) otc = target-'A'+'a';
+    else otc = target-'a'+'A';
+
+    int dis = 0;
+    bool start = false;
+    for(auto c : str){
+        if(c == target || c == otc){
+            start = true;
+            if(dis){
+                cout << dis << " ";
+                dis = 0;
+            }
+        }
+        if(start) dis++;
+    }
+    
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "1字串 05 棒球遊戲",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "APCS 2016-10-04"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int main() {
+    int a, b, i, j, k, score = 0, out = 0;
+    bool nb = false;
+    vector<int> tag(9, 0);
+    vector<string> game(9 * 5, "");
+
+    for (j = 0; j < 9; j++) {
+        cin >> a;
+        for (i = 0; i < a; i++) cin >> game[j * 5 + i];
+    }
+
+    cin >> b;
+
+    for (j = 0; j < 5; j++) {
+        for (i = 0; i < 9; i++) {
+            if (game[i * 5 + j] == "SO" || game[i * 5 + j] == "FO" || game[i * 5 + j] == "GO") {
+                out++;
+                if (out == b) {
+                    nb = true;
+                    break;
+                }
+                if ((out % 3) == 0) fill(tag.begin(), tag.end(), 0);
+            } else {
+                if (game[i * 5 + j] == "1B") {
+                    for (k = 0; k < 9; k++) if (tag[k] != 0) tag[k] += 1;
+                    tag[i] += 1;
+                }
+                if (game[i * 5 + j] == "2B") {
+                    for (k = 0; k < 9; k++) if (tag[k] != 0) tag[k] += 2;
+                    tag[i] += 2;
+                }
+                if (game[i * 5 + j] == "3B") {
+                    for (k = 0; k < 9; k++) if (tag[k] != 0) tag[k] += 3;
+                    tag[i] += 3;
+                }
+                if (game[i * 5 + j] == "HR") {
+                    for (k = 0; k < 9; k++) if (tag[k] != 0) tag[k] += 4;
+                    tag[i] += 4;
+                }
+                for (k = 0; k < 9; k++) {
+                    if (tag[k] >= 4) {
+                        tag[k] = 0;
+                        score++;
+                    }
+                }
+            }
+        }
+        if (nb) break;
+    }
+
+    cout << score;
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 01 找出最小的完全平方數",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "105資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+bool ct(int n){
+
+    while(n){
+        if((n%10)%2 != 0) return false;
+        else n /= 10;
+    }
+
+    return true;
+}
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    int n;
+    cin >> n;
+
+    while(n--){
+
+        cin >> k;
+
+        if(k==1){
+            cout << 4 << "\\n";
+            continue;
+        }
+
+        if(k%2 == 0){
+            for(i = int(pow(10,(k/2)-1) * 4.462224f);i > 0;i+=2){ //sqrt(20)
+                if(ct(i*i)){
+                    cout << i*i << "\\n";
+                    break;
+                }
+            }
+        }else{
+            for(i = int(pow(10,(k-1)/2) * 1.404204f);i > 0;i+=2){ //sqrt(2)
+                if(ct(i*i)){
+                    cout << i*i << "\\n";
+                    break;
+                }
+            }
+        }
+    }
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 02 賓果遊戲",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "102資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+
+    int info[26][4];
+    // 0 -> (left up) to (right down) line
+    // 1 -> (right up) to (left down) line
+    // 2 -> column
+    // 3 -> row
+    bitset<26> cld;
+
+    for(i=0;i<5;i++) for(j=0;j<5;j++){
+        cin >> k;
+
+        if(i == j){
+            info[k][0] = 1;
+        }else{
+            info[k][0] = 0;
+        }
+
+        if(i + j == 4){
+            info[k][1] = 1;
+        }else{
+            info[k][1] = 0;
+        }
+
+
+        info[k][2] = i+1;
+        info[k][3] = j+1;
+
+    }
+
+    int rs[6] = {0}, cs[6] = {0}, lurds = 0, rulds = 0;
+
+    while(cin >> k && k != -1){
+        cld[k] = 1;
+
+        if(info[k][0])
+            lurds += 1;
+
+        if(info[k][1])
+            rulds += 1;
+
+        cs[info[k][2]] += 1;
+
+        rs[info[k][3]] += 1;
+
+    }
+
+
+    int ans, ansv = -1;
+
+
+    for(i=1;i<=25;i++){
+
+        if(cld[i]) continue;
+
+        int cnt = 0;
+
+        if(info[i][0])
+            if(lurds + 1 == 5)
+                cnt++;
+
+        if(info[i][1])
+            if(rulds + 1 == 5)
+                cnt++;
+
+        if(cs[info[i][2]] + 1 == 5)
+            cnt++;
+
+        if(rs[info[i][3]] + 1 == 5)
+            cnt++;
+
+        if(cnt > ansv){
+            ansv = cnt;
+            ans = i;
+        }
+
+    }
+
+    
+    cout << ans;
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 03 費波那契數列",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int f(int n){
+    if(n < 0) return -1;
+    if(n == 0) return 0;
+    if(n == 1 || n == 2) return 1;
+
+    return f(n-1) + f(n-2);
+}
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    int n;
+    while(cin >> n){
+        cout << f(n) << "\\n";
+    }
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 04 f91",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "UVa 10696", "來亂的"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int f91(int n){
+    if(n <= 100) return f91(f91(n+11));
+    else return (n-10);
+}
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    while(cin >> k && k){
+        cout << "f91(" << k << ") = " << f91(k) << "\\n";
+    }
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 05 執行路徑數",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "UVa 10854"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+ll tim(ll s, ll e, vector<ll> &info){
+
+    if(s > e) return 1;
+
+    ll t = 1;
+
+
+    for(ll i=s;i<=e;i++){
+        ll nt = 0;
+        
+        if(info[i] == 0 || info[i] == 2) continue;
+
+        
+        ll cnt = 1, j;
+        vector<ll> elt;
+
+        elt.push_back(i);
+
+        for(j=i+1;j<=e;j++){
+
+            if(info[j] == 1) cnt++;
+            else if(info[j] == 0) cnt--;
+            else if(info[j] == 2 && cnt == 1) elt.push_back(j);
+
+            if(!cnt){
+                elt.push_back(j);
+                break;
+            }
+        }
+
+
+        for(j=0;j<elt.size()-1;j++){
+
+            nt += tim(elt[j]+1, elt[j+1]-1, info);
+        }
+                    
+        i = elt[elt.size()-1];
+        t *= nt;
+    }
+
+    return t;
+}
+
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    ll n;
+    cin >> n;
+
+
+
+    while(n--){
+
+        string s;
+        vector<ll> info;
+        while(cin >> s && s != "ENDPROGRAM"){
+            if(s == "S") continue;
+            if(s == "IF"){
+                info.push_back(1);
+            }else if(s == "ELSE"){
+                info.push_back(2);
+            }else{
+                info.push_back(0);
+            }
+        }
+
+
+
+        cout << tim(0, info.size()-1, info) << "\\n";
+
+
+
+
+
+    }
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 06 三色河內塔",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "103資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int cnt = 0;
+
+void move(int n, char from, char to, char by){
+    
+    if(n <= 0)
+        return;
+
+    move(n-1, from, by, to);
+    cout << "ring " << n << " : " << from << " => " << to << "\\n";
+    cnt++;
+    move(n-1, by, to, from);
+    return;
+}
+
+
+
+void distribute(int n, char from, char to, char by){
+
+    if(n <= 0)
+        return;
+    move(n-1, from, by, to);
+    cout << "ring " << n << " : " << from << " => " << to << "\\n";
+    cnt++;
+    distribute(n-2, by, from, to);
+    return;
+}
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    cin.tie(0);
+    ios_base::sync_with_stdio(false);
+
+    int n;
+    cin >> n;
+
+    distribute(n, 'A', 'C', 'B');
+
+    cout << "共需" << cnt << "個移動\\n";
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 07 促銷活動",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+void discount(double &p1, double &p2){
+
+    if(p1 == p2) p2 /= 2.;
+    return;
+
+}
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    //cin.tie(0);
+	//ios_base::sync_with_stdio(false);
+
+    double p1, p2;
+    cout << "Original price:" << endl;
+    cin >> p1 >> p2;
+    discount(p1, p2);
+    cout << "Price after discount:" << endl;
+    cout << p1 << " " << p2 << endl;
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 08 錯誤更正",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "UVa 541"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    int n;
+
+    while(cin >> n && n){
+
+        bitset<100 +5> list[100 +5];
+
+        for(i=0;i<n;i++){
+            for(j=0;j<n;j++){
+                bool temp;
+                cin >> temp;
+                list[i][j] = temp;
+            }
+        }
+
+        int ce = 0, ces;
+        for(i=0;i<n;i++){
+            if(list[i].count() % 2){
+                ce++;
+                ces = i+1;
+            }
+        }
+        int re = 0, res;
+        for(i=0;i<n;i++){
+
+            int cnt = 0;
+            for(j=0;j<n;j++) cnt += list[j][i];
+            if(cnt % 2){
+                re++;
+                res = i+1;
+            }
+        }
+    
+        if(!ce && !re){
+            cout << "OK\\n";
+        }else if(ce == 1 && re == 1){
+            cout << "Change bit (" << ces << "," << res << ")\\n";
+        }else{
+            cout << "Corrupt\\n";
+        }
+    }
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 09 爺爺種樹",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "105資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    bitset<500 +5> info[500 +5];
+    int n, m;
+    cin >> n >> m;
+
+    int t;
+    cin >> t;
+
+    while(t--){
+        int x1, x2, y1, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+
+        if(x1 == x2){
+            for(i=min(y1,y2);i<=max(y1,y2);i++){
+                info[x1][i] = 1;
+            }
+        }else if(y1 == y2){
+            for(i=min(x1,x2);i<=max(x1,x2);i++){
+                info[i][y1] = 1;
+            }
+        }else if((x1 > x2 && y1 < y2) || (x1 < x2 && y1 > y2)){
+            for(int xi=min(x1, x2), yi=max(y1, y2) ; xi<=max(x1, x2) && yi>=min(y1, y2) ; xi++, yi--){
+                info[xi][yi] = 1;
+            }
+        }else if((x1 < x2 && y1 < y2) || (x1 > x2 && y1 > y2)){
+            for(int xi=max(x1, x2), yi=max(y1, y2) ; xi>=min(x1, x2) && yi>=min(y1, y2) ; xi--, yi--){
+                info[xi][yi] = 1;
+            }
+        }
+    }
+    int cnt = 0;
+    for(i=1;i<=n;i++){
+        cnt += info[i].count();
+    }
+    cout << cnt;
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 10 賓果遊戲",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "102資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    unordered_map<int, char> player;
+
+    int info[20 +5][17][4];
+    // 0 -> (left up) to (right down) line
+    // 1 -> (right up) to (left down) line
+    // 2 -> column
+    // 3 -> row
+
+    int statue[20 +5][10] = {0};
+    /*
+      9  0 1 2 3  8
+        ._._._._.
+        |_|_|_|_| 4
+        |_|_|_|_| 5
+        |_|_|_|_| 6
+        |_|_|_|_| 7
+       8         9
+    */
+
+
+    char c;
+    cin >> c;
+
+    int n;
+    cin >> n;
+
+    for(i=0;i<n;i++){
+        cin >> c;
+        player.insert({i,c});
+
+        for(j=0;j<16;j++){
+            cin >> k;
+            
+            info[i][k][0] = !(j%5);
+            info[i][k][1] = ((j % 4) + (j / 4) == 3);
+            info[i][k][2] = j%4;
+            info[i][k][3] = j/4;
+        }
+    }
+
+    vector<int> call;
+    vector<char> winner;
+
+    cin >> c;
+
+    for(i=0;i<13;i++){ //cuz when 13 must have one win
+
+        bool win = false;
+
+        cin >> k;
+        call.push_back(k);
+
+        for(j=0;j<n;j++){
+
+            if(info[j][k][0]){
+                statue[j][9]++;
+                if(statue[j][9] == 4){
+                    win = 1;
+                    winner.push_back(player[j]);
+                }
+            }
+            if(info[j][k][1]){
+                statue[j][8]++;
+                if(statue[j][8] == 4){
+                    win = 1;
+                    winner.push_back(player[j]);
+                }
+            }
+            statue[j][info[j][k][2]]++;
+            if(statue[j][info[j][k][2]] == 4){
+                win = 1;
+                winner.push_back(player[j]);
+            }
+            statue[j][info[j][k][3]+4]++;
+            if(statue[j][info[j][k][3]+4] == 4){
+                win = 1;
+                winner.push_back(player[j]);
+            }
+
+        }
+
+
+
+        if(win)
+            break;
+
+
+    }
+
+
+    for(auto u : call)
+        cout << u << " ";
+
+    for(auto c : winner)
+        cout << c << " ";
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "2函式 11 加密解密",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "107資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const char a[5][5]=
+{
+ {'a','b','c','d','e'},
+ {'f','g','h','i','j'},
+ {'k','l','m','n','o'},
+ {'p','r','s','t','u'},
+ {'v','w','x','y','z'}
+};
+
+const char b[5][5]=
+{
+ {'E','X','A','M','P'},
+ {'L','B','C','D','F'},
+ {'G','H','I','J','K'},
+ {'N','O','R','S','T'},
+ {'U','V','W','Y','Z'}
+};
+
+unordered_map<char, pair<int,int>> id=
+{
+ {'a',{0,0}},{'b',{0,1}},{'c',{0,2}},{'d',{0,3}},{'e',{0,4}},
+ {'f',{1,0}},{'g',{1,1}},{'h',{1,2}},{'i',{1,3}},{'j',{1,4}},
+ {'k',{2,0}},{'l',{2,1}},{'m',{2,2}},{'n',{2,3}},{'o',{2,4}},
+ {'p',{3,0}},{'r',{3,1}},{'s',{3,2}},{'t',{3,3}},{'u',{3,4}},
+ {'v',{4,0}},{'w',{4,1}},{'x',{4,2}},{'y',{4,3}},{'z',{4,4}},
+ {'E',{0,0}},{'X',{0,1}},{'A',{0,2}},{'M',{0,3}},{'P',{0,4}},
+ {'L',{1,0}},{'B',{1,1}},{'C',{1,2}},{'D',{1,3}},{'F',{1,4}},
+ {'G',{2,0}},{'H',{2,1}},{'I',{2,2}},{'J',{2,3}},{'K',{2,4}},
+ {'N',{3,0}},{'O',{3,1}},{'R',{3,2}},{'S',{3,3}},{'T',{3,4}},
+ {'U',{4,0}},{'V',{4,1}},{'W',{4,2}},{'Y',{4,3}},{'Z',{4,4}}
+};
+
+
+int main(){
+
+    int i, j, k, l = 0, t1, t2;
+    
+
+    int n;
+    cin >> n;
+
+    string info;
+    cin >> info;
+
+
+
+    if(isupper(info[0])){
+
+        for(i=0;i<n;i+=2){
+
+            int i1 = id[info[i]].first;
+            int j1 = id[info[i]].second;
+            int i2 = id[info[i+1]].first;
+            int j2 = id[info[i+1]].second;
+
+            info[i] = a[i1][j2];
+            info[i+1] = a[i2][j1];
+
+        }
+
+        reverse(info.begin(), info.end());
+
+    }else{
+        reverse(info.begin(), info.end());
+        for(i=0;i<n;i+=2){
+
+            int i1 = id[info[i]].first;
+            int j1 = id[info[i]].second;
+            int i2 = id[info[i+1]].first;
+            int j2 = id[info[i+1]].second;
+
+            info[i] = b[i1][j2];
+            info[i+1] = b[i2][j1];
+
+        }
+    }
+
+    cout << info;
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "3結構 01 多邊形面積",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+struct Point
+{
+    float x, y;
+};
+
+
+float a(vector<Point> &p){
+	float area = 0.0;
+	for (int i=p.size()-1, j=0; j<p.size(); i=j++)
+	{
+		area += p[i].x * p[j].y;
+		area -= p[i].y * p[j].x;
+	}
+    return float(fabs(area) / 2.0);
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    vector<Point> p;
+    
+    int n;
+    cin >> n;
+
+    float f1, f2;
+
+    for(i=0;i<n;i++){
+        cin >> f1 >> f2;
+        p.push_back({f1,f2});
+    }
+
+    cout << fixed << setprecision(2) << float(a(p));
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "3結構 02 排隊",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "105資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    int n;
+    cin >> n;
+    n--;
+
+    queue<int> p;
+
+    int nowt = 0, needt, newt, ans = 0;
+
+    cin >> nowt >> needt;
+
+    p.push(needt);
+
+    
+
+    while(n--){
+        cin >> newt >> needt;
+
+        int durt = newt-nowt;
+
+        while(!p.empty() && durt > 0){
+
+            if(p.front()>durt){
+                p.front() -= durt;
+                break;
+            }else{
+                durt -= p.front();
+                p.pop();
+            }
+
+        }
+
+        p.push(needt);
+        nowt = newt;
+
+        ans = max(ans, (int)p.size()-1);
+
+    }
+
+    cout << ans;
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "3結構 03 99遊戲",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "104資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    queue<char> info[4];
+    vector<int> list;
+
+    for(i=0;i<4;i++){
+        string s;
+        cin >> s;
+
+        int ipid;
+        switch(s[0]){
+            case 'A':{
+                ipid = 0;
+                break;
+            }
+            case 'B':{
+                ipid = 1;
+                break;
+            }
+            case 'C':{
+                ipid = 2;
+                break;
+            }
+            case 'D':{
+                ipid = 3;
+                break;
+            }
+        }
+
+        list.push_back(ipid);
+
+        for(j=0;j<13;j++){
+            cin >> s;
+            if(s != "10") info[ipid].push(s[0]);
+            else info[ipid].push('0');
+        }
+    }
+
+
+    int who = 0;
+
+    int point = 0;
+
+    while(1){
+        switch(info[list[who]].front()){
+            case 'A':{
+                point = 0;
+                break;
+            }
+            case '4':{
+                reverse(list.begin(), list.end());
+                who = 3 - who;
+                break;
+            }
+            case '5':{
+                break;
+            }
+            case '0':{ //10
+                if(point + 10 > 99) point -= 10;
+                else point += 10;
+                break;
+            }
+            case 'J':{
+                break;
+            }
+            case 'Q':{
+                if(point + 20 > 99) point -= 20;
+                else point += 20;
+                break;
+            }
+            case 'K':{
+                point = 99;
+                break;
+            }
+            default:{
+                point += info[list[who]].front() - '0';
+            }
+        }
+
+        info[list[who]].pop();
+
+
+        if(point > 99){
+            switch(list[who]){
+                case 0:{
+                    cout << "A\\n";
+                    break;
+                }
+                case 1:{
+                    cout << "B\\n";
+                    break;
+                }
+                case 2:{
+                    cout << "C\\n";
+                    break;
+                }
+                case 3:{
+                    cout << "D\\n";
+                    break;
+                }
+            }
+            cout << info[list[who]].size();
+            break;
+        }
+
+        if(info[list[who]].empty()){
+            switch(list[who]){
+                case 0:{
+                    cout << "A\\n";
+                    break;
+                }
+                case 1:{
+                    cout << "B\\n";
+                    break;
+                }
+                case 2:{
+                    cout << "C\\n";
+                    break;
+                }
+                case 3:{
+                    cout << "D\\n";
+                    break;
+                }
+            }
+            cout << point;
+            break;
+        }
+
+        who++;
+        who %= 4;
+    }
+    
+    
+    
+    
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "3結構 04 動物數量統計",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-09-20",
+      tags: ["基礎", "103資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    unordered_map<string, unordered_map<string, int>> info;
+
+    int n;
+    cin >> n;
+
+    string animal, place;
+    int amount;
+
+    vector<string> places;
+    
+    unordered_map<string, vector<string>> animals;
+
+    while(n--){
+        cin >> animal >> amount >> place;
+
+        info[place][animal] += amount;
+
+        bool animal_exi = 0, place_exi = 0;
+
+        for(auto s : places){
+            if(s == place){
+                place_exi = 1;
+                break;
+            }
+        }
+
+        for(auto s : animals[place]){
+            if(s == animal){
+                animal_exi = 1;
+                break;
+            }
+        }
+
+        if(!place_exi) places.push_back(place);
+        if(!animal_exi) animals[place].push_back(animal);
+
+    }
+
+
+    for(auto place : places){
+
+        bool pri = 0;
+
+        cout << place << ":";
+        for(auto animal : animals[place]){
+            if(info[place][animal]){
+                cout << (pri ? "," : "") << animal << " " << info[place][animal];
+                pri = 1;
+            }
+        }
+        cout << "\\n";
+    }
+
+
+
+    
 
     return 0;
 }`
