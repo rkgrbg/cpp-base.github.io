@@ -3,6 +3,9 @@ window.CPP_CODE_DATA = {
   categories: [
     { id: "sctb", name: "學校課本" },
     { id: "schw",   name: "學校作業" },
+    { id: "apcs",  name: "APCS" },
+    { id: "uva", name: "UVa" },
+    { id: "zj",   name: "ZJ" },
     { id: "tpl",  name: "模板 / 工具" }
   ],
   items: [
@@ -2676,7 +2679,7 @@ int main(){
       title: "1字串 03 跑長編碼與資料壓縮",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-09-20",
-      tags: ["基礎", "160資能競賽"],
+      tags: ["基礎", "106資能競賽"],
       code:
 `# include <bits/stdc++.h>
 using namespace std;
