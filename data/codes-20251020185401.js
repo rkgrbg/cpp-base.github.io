@@ -1067,66 +1067,68 @@ int main(){
     int i, j, k, l = 0, i1, i2, t1, t2;
     
     string info;
-    cin >> info;
+    while(cin >> info){
+        stack<int> situ;
 
-    stack<int> situ;
+        for(auto c : info){
 
-    for(auto c : info){
-
-        switch(c){
-            case '+':{
-                int a, b;
-                a = situ.top();
-                situ.pop();
-                b = situ.top();
-                situ.pop();
-                situ.push(b + a);
-                break;
-            }
-            case '-':{
-                int a, b;
-                a = situ.top();
-                situ.pop();
-                b = situ.top();
-                situ.pop();
-                situ.push(b - a);
-                break;
-            }
-            case '*':{
-                int a, b;
-                a = situ.top();
-                situ.pop();
-                b = situ.top();
-                situ.pop();
-                situ.push(b * a);
-                break;
-            }
-            case '/':{
-                int a, b;
-                a = situ.top();
-                situ.pop();
-                b = situ.top();
-                situ.pop();
-                situ.push(b / a);
-                break;
-            }
-            case '%':{
-                int a, b;
-                a = situ.top();
-                situ.pop();
-                b = situ.top();
-                situ.pop();
-                situ.push(b % a);
-                break;
-            }
-            default :{
-                situ.push(c-'0');
-                break;
+            switch(c){
+                case '+':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b + a);
+                    break;
+                }
+                case '-':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b - a);
+                    break;
+                }
+                case '*':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b * a);
+                    break;
+                }
+                case '/':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b / a);
+                    break;
+                }
+                case '%':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b % a);
+                    break;
+                }
+                default :{
+                    situ.push(c-'0');
+                    break;
+                }
             }
         }
+
+        cout << situ.top() << "\\n";
     }
 
-    cout << situ.top();
+    
 
     return 0;
 }`
@@ -1249,6 +1251,10 @@ int main(){
             cnt++;
         }
         else situ--;
+        if(situ < 0){
+            cout << 0;
+            return 0;
+        }
     }
 
     if(!situ){
@@ -3929,6 +3935,477 @@ int main()
 
 
 
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "4堆疊 01 括號問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-16",
+      tags: ["基礎", "104資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    
+    string info;
+    cin >> info;
+
+    int cnt = 0, situ = 0;
+
+    for(auto c : info){
+        if(c == '('){
+            situ++;
+            cnt++;
+        }
+        else situ--;
+        if(situ < 0){
+            cout << 0;
+            return 0;
+        }
+    }
+
+    if(!situ){
+        cout << cnt;
+    }else{
+        cout << 0;
+    }
+    
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "4堆疊 02 後序式求值",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-16",
+      tags: ["基礎", "103資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    string info;
+    while(cin >> info){
+        stack<int> situ;
+
+        for(auto c : info){
+
+            switch(c){
+                case '+':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b + a);
+                    break;
+                }
+                case '-':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b - a);
+                    break;
+                }
+                case '*':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b * a);
+                    break;
+                }
+                case '/':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b / a);
+                    break;
+                }
+                case '%':{
+                    int a, b;
+                    a = situ.top();
+                    situ.pop();
+                    b = situ.top();
+                    situ.pop();
+                    situ.push(b % a);
+                    break;
+                }
+                default :{
+                    situ.push(c-'0');
+                    break;
+                }
+            }
+        }
+
+        cout << situ.top() << "\\n";
+    }
+
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "4堆疊 03 單線鐵路",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-16",
+      tags: ["基礎", "UVa 514"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    int n;
+    
+    while(cin >> n && n){
+
+        vector<int> info(n);
+
+        while(cin >> info[0] && info[0]){
+            for(i=1;i<n;i++){
+                cin >> info[i];
+            }
+
+            bool c = 1;
+            int situ = 1;
+            stack<int> buff;
+
+            for(auto idx : info){
+                if(idx < situ && buff.top() != idx){
+                    c = 0;
+                    break;
+                }
+                if(idx < situ && buff.top() == idx){
+                    buff.pop();
+                    continue;
+                }
+                if(idx == situ){
+                    situ++;
+                    continue;
+                }
+                if(idx > situ){
+                    for(i=situ;i<idx;i++){
+                        buff.push(i);
+                    }
+                    situ = idx+1;
+                    continue;
+                }
+            }
+
+
+            cout << (c ? "Yes\\n" : "No\\n");
+
+        }
+
+        cout << "\\n";
+
+    }
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "4堆疊 04 中置式轉後置式",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-16",
+      tags: ["基礎", "103資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+string info;
+
+string to_posfix(int op, int ed){
+
+    string ans;
+    queue<char> bigger_cache, lower_cache;
+
+    for(int i=op;i<ed;i++){
+        
+        if(info[i] == ')') continue;
+
+        if(info[i] == '('){
+            
+            int cnt = 1, j;
+
+            for(j=i+1;j<ed;j++){
+                if(info[j] == '(') cnt++;
+                else if(info[j] == ')') cnt--;
+                if(!cnt) break;
+            }
+
+            ans += to_posfix(i+1, j);
+            i = j;
+
+        }else if(info[i] == '+' || info[i] == '-'){
+
+            while(!bigger_cache.empty()){
+                ans += bigger_cache.front();
+                bigger_cache.pop();
+            }
+            while(!lower_cache.empty()){
+                ans += lower_cache.front();
+                lower_cache.pop();
+            }
+            lower_cache.push(info[i]);
+
+        }else if(info[i] == '*' || info[i] == '/' || info[i] == '%'){
+
+            while(!bigger_cache.empty()){
+                ans += bigger_cache.front();
+                bigger_cache.pop();
+            }
+            bigger_cache.push(info[i]);
+
+        }else{
+            ans += info[i];
+        }
+    }
+
+    while(!bigger_cache.empty()){
+        ans += bigger_cache.front();
+        bigger_cache.pop();
+    }
+    while(!lower_cache.empty()){
+        ans += lower_cache.front();
+        lower_cache.pop();
+    }
+
+    return ans;
+
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    
+    getline(cin, info);
+
+    cout << to_posfix(0, info.size());
+    
+    
+
+
+    return 0;
+}`
+    },
+    {
+      category: "schw",
+      title: "4堆疊 05 電腦算術運算",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-16",
+      tags: ["基礎", "105資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+string info;
+
+bool is_digit(ll op, ll ed){
+
+    if (op >= ed) return 0;
+
+    for(ll i=op;i<ed;i++){
+
+        if(info[i] > '9' || info[i] < '0'){
+            return 0;
+        }
+
+    }
+
+    return 1;
+}
+
+bool is_op(ll op, ll ed){
+
+    if (op >= ed) return 0;
+
+    if (op+1 != ed) return 0;
+
+    if (!(info[op]=='+' || info[op]=='-' || info[op]=='*' || info[op]=='/')) return 0;
+
+    return 1;
+}
+
+bool is_leg(ll op, ll ed){
+
+
+    if (op >= ed) return 0;
+
+    if (info[op] != '(') return 0;
+    if (info[ed-1] != ')') return 0;
+
+    ll situ = 0;
+    ll comma = 0;
+    ll c1loc = 0;
+
+    for(ll i=op+1;i<ed-1;i++){
+
+        if (situ < 0) return 0;
+
+        if(info[i] == '('){
+            situ++;
+            continue;
+        }
+        if(info[i] == ')'){
+            situ--;
+            continue;
+        }
+
+        if(situ == 0 && info[i] == ','){
+            comma++;
+            if(comma == 1){
+
+                if (!(is_digit(op+1,i) || is_leg(op+1,i))) return 0;
+                c1loc = i;
+
+            }else if(comma == 2){
+
+                if (!(is_digit(c1loc+1,i) || is_leg(c1loc+1,i))) return 0;
+                if (!is_op(i+1,ed-1)) return 0;
+
+            }
+        }
+    }
+
+    if (comma != 2 && situ != 0) return 0;
+
+    return 1;
+}
+
+ll ans(ll op, ll ed){
+
+    ll situ = 0;
+    ll comma = 0;
+    ll c1loc = 0;
+
+    ll dig1, dig2;
+
+    for(ll i=op+1;i<ed-1;i++){
+
+        if(info[i] == '('){
+            situ++;
+            continue;
+        }
+        if(info[i] == ')'){
+            situ--;
+            continue;
+        }
+
+        if(situ == 0 && info[i] == ','){
+            comma++;
+            if(comma == 1){
+
+                if(is_digit(op+1,i)){
+                    dig1 = stoi(info.substr(op+1, i - (op+1)));
+                }else{
+                    dig1 = ans(op+1,i);
+                }
+
+                c1loc = i;
+
+            }else if(comma == 2){
+
+                if(is_digit(c1loc+1,i)){
+                    dig2 = stoi(info.substr(c1loc+1, i - (c1loc+1)));
+                }else{
+                    dig2 = ans(c1loc+1,i);
+                }
+
+                if(info[i+1] == '/' && dig2 == 0){
+                    return -1;
+                }else{
+                    switch(info[i+1]){
+                        case '+': {
+                            return dig1 + dig2;
+                            break;
+                        }
+                        case '-': {
+                            return dig1 - dig2;
+                            break;
+                        }
+                        case '*': {
+                            return dig1 * dig2;
+                            break;
+                        }
+                        case '/': {
+                            return dig1 / dig2;
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+
+int main(){
+
+    ll i, j, k, l = 0, i1, i2, t1, t2;
+
+    ll N;
+    cin >> N;
+
+    cin.ignore();
+
+    while(N--){
+
+        info.clear();
+
+        getline(cin,info);
+
+        if(!is_leg(0, info.size())){
+
+            cout << "-1\\n";
+
+        }else{
+
+            cout << ans(0, info.size()) << "\\n";
+
+        }
+    }
+    
     
 
     return 0;
