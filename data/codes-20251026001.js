@@ -4410,6 +4410,441 @@ int main(){
 
     return 0;
 }`
+    },
+    {
+      category: "sctb",
+      title: "習題14-1 最近點對問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "UVa 10245", "分治"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+struct pos_str{
+    double x, y;
+};
+
+
+bool cmp(const pos_str &a, const pos_str &b){
+
+    if(a.x != b.x)
+        return a.x < b.x;
+    else
+        return a.y < b.y;
+
+}
+
+
+
+inline double d(const pos_str &p1, const pos_str &p2){
+    
+    return sqrt((p1.x - p2.x)*(p1.x - p2.x) + (p1.y - p2.y)*(p1.y - p2.y));
+
+}
+
+double f(int p1, int p2, vector<pos_str> &pos){
+
+    
+
+    if((p2 - p1) > 3){
+        auto mid = p1 + (p2-p1) / 2;
+
+        double dis = min(f(p1, mid, pos), f(mid, p2, pos));
+
+        int lm = mid, rm = mid;
+
+        for(;lm>=p1;lm--)
+            if(pos[lm].x < pos[mid].x-dis)
+                break;
+
+        for(;rm<p2;rm++)
+            if(pos[rm].x > pos[mid].x+dis)
+                break;
+
+
+        for(int i=lm+1;i<mid;i++){
+            for(int j=mid;j<rm;j++){
+                dis = min(dis, d(pos[i],pos[j]));
+            }
+        }
+
+
+        
+        return dis;
+
+    }else{
+
+        double dis = 10001.0;
+
+        for(int i = p1;i < p2;i++){
+
+            for(int j = i+1;j < p2;j++){
+
+                dis = min(dis, d(pos[i],pos[j]));
+
+            }
+        }
+
+
+        return dis;
+    }
+        
+
+
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2;
+    double t1, t2;
+
+    int n;
+
+    while(cin >> n && n){
+
+        
+
+        vector<pos_str> pos;
+        for(i=0;i<n;i++){
+            cin >> t1 >> t2;
+            pos.push_back(pos_str{t1, t2});
+        }
+
+        sort(pos.begin(), pos.end(), cmp);
+
+
+        double min_dis = f(0,pos.size(),pos);
+
+
+        if(min_dis >= 10000)
+            cout << "INFINITY\\n";
+        else
+            cout << fixed << setprecision(4) << min_dis << "\\n";
+    }
+
+
+
+    return 0;
+}`
+    },
+    {
+      category: "sctb",
+      title: "習題14-2 蘇丹王位繼承者",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "UVa 167", "回溯"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int cb[8][8], mp = INT_MIN, p = 0;
+
+bitset<8> c;
+bitset<15> r, l;
+
+
+
+void f(int Q, int R){
+
+    if(Q == 0){
+        mp = max(p, mp);
+        return;
+    }
+
+
+    for(int i=0;i<8;i++){
+        if(c[i] || r[R+i] || l[R-i +7])
+            continue;
+
+        c[i] = 1;
+        r[R+i] = 1;
+        l[R-i +7] = 1;
+
+        p += cb[i][R];
+
+        f(Q-1, R+1);
+
+        p -= cb[i][R];
+
+        c[i] = 0;
+        r[R+i] = 0;
+        l[R-i +7] = 0;
+
+    }
+
+
+    return;
+}
+
+int main()
+{
+    int i, j, i1, i2, t1=INT_MIN, t2;
+
+    int n;
+    cin >> n;
+
+    while(n--){
+
+        for(i=0;i<8;i++) for(j=0;j<8;j++)
+            cin >> cb[i][j];
+
+
+        f(8, 0);
+
+        cout << setw(5) << setfill(' ') << mp << "\\n";
+
+
+        mp = INT_MIN;
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "sctb",
+      title: "習題14-3 無刻度容器倒水問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "106資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int gcd(int a, int b){
+
+    while(b){
+
+        int t = a % b;
+        a = b;
+        b = t;
+
+	}
+    return a;
+
+}
+
+int step(int x, int y, int z){
+
+    int nx = 0, ny = 0, s = 0;
+    
+    while(nx != z && ny != z){
+        
+        if(!nx){
+            nx = x;
+            s++;
+
+        }else if(ny == y){
+            ny = 0;
+            s++;
+
+        }else{
+            if((y-ny)<=nx){
+                nx -= (y-ny);
+                ny = y;
+
+            }else{
+                ny += nx;
+                nx = 0;
+
+            }
+            s++;
+
+        }
+    }
+
+    return s;
+
+}
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    
+    int n, x, y, z;
+    cin >> n;
+
+    while(n--){
+
+        cin >> x >> y >> z;
+
+        if((z > x && z > y) || z%gcd(x, y)){
+            cout << "-1\\n";
+            continue;
+        }
+
+        cout << min(step(x, y, z),step(y, x, z)) << "\\n";
+
+
+    }
+
+
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "sctb",
+      title: "習題15-1 計算方法數",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "UVa 357", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const int coin[5] = {1, 5, 10, 25, 50};
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+
+    vector<ll> dp(30001);
+    dp[0] = 1;
+
+    for(auto c : coin){
+        for(i=c;i<30001;i++){
+            dp[i] += dp[i - c];
+        }
+    }
+    
+    
+    while(cin >> k){
+        if(dp[k] != 1){
+            cout << "There are " << dp[k] << " ways to produce " << k << " cents change.\\n";
+        }else{
+            cout << "There is only 1 way to produce " << k << " cents change.\\n";
+        }
+    }
+
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "sctb",
+      title: "習題15-2 雙子星塔",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "UVa 10060", "LCS"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 1, i1, i2, t1, t2;
+    
+    
+    while(cin >> t1 >> t2 && (t1 || t2)){
+        
+        vector<int> a(t1), b(t2);
+
+        for(i=0;i<t1;i++)
+            cin >> a[i];
+        for(i=0;i<t2;i++)
+            cin >> b[i];
+
+        vector<vector<int>> dp(t1+1, vector<int>(t2+1));
+
+        for(i=1;i<=t1;i++){
+            for(j=1;j<=t2;j++){
+                if(a[i-1] == b[j-1]){
+                    dp[i][j] = dp[i-1][j-1] +1;
+                }else{
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+
+        cout << "Twin Towers #" << l << "\\nNumber of Tiles : " << dp[t1][t2] << "\\n\\n";
+        l++;
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "sctb",
+      title: "習題15-3 農作物採收問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-26",
+      tags: ["基礎", "104資能競賽", "kadane演算法"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    int n;
+    cin >> n;
+
+    vector<vector<int>> info(n, vector<int>(n)), pf(n, vector<int>(n));
+    for(i=0;i<n;i++){
+        for(j=0;j<n;j++){
+            cin >> info[i][j];
+            if (j > 0)
+                pf[i][j] = pf[i][j-1] + info[i][j];
+            else
+                pf[i][j] = info[i][j];
+        }
+    }
+
+    int ans = 0;
+
+    for(i=0;i<n;i++){
+        for(j=i;j<n;j++){
+            vector<int> now(n);
+            for(k=0;k<n;k++){
+                if(i != j)
+                    now[k] = pf[k][j] - pf[k][i];
+                else
+                    now[k] = pf[k][j];
+            }
+
+            // kadane
+            int cur = 0, bst = 0;
+
+            for(k=0;k<n;k++){
+                cur = max(cur + now[k], now[k]);
+                bst = max(bst, cur);
+            }
+
+            ans = max(bst, ans);
+        }
+    }
+
+
+    cout << ans;
+
+    return 0;
+}
+`
     }
   ]
 };
