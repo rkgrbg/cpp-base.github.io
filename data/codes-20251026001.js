@@ -5747,7 +5747,7 @@ int main(){
     },
     {
       category: "schw",
-      title: "5佇列 印表機佇列",
+      title: "5佇列 01 印表機佇列",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-10-30",
       tags: ["基礎", "UVa 12100"],
@@ -5823,7 +5823,7 @@ int main(){
     },
     {
       category: "schw",
-      title: "5佇列 撲克牌遊戲：手風琴",
+      title: "5佇列 02 撲克牌遊戲：手風琴",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-10-30",
       tags: ["基礎", "UVa 127"],
@@ -5957,7 +5957,7 @@ int main(){
     },
     {
       category: "schw",
-      title: "5佇列 團體佇列",
+      title: "5佇列 03 團體佇列",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-10-30",
       tags: ["基礎", "UVa 540"],
