@@ -5744,6 +5744,293 @@ int main(){
     std::cout << tails.size() << "\\n";
     return 0;}
 `
+    },
+    {
+      category: "schw",
+      title: "5佇列 印表機佇列",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "UVa 12100"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+
+    int T;
+
+    cin >> T;
+
+    while(T--){
+        
+        int n, m;
+        cin >> n >> m;
+
+        queue<pair<int, bool>> info;
+        vector<int> things(10);
+
+        for(i=0;i<n;i++){
+            cin >> k;
+            things[k]++;
+            if(i != m) info.push({k, 0});
+            else  info.push({k, 1});
+        }
+
+        int cnt = 0;
+
+        while(1){
+
+            bool can_print = 1;
+            for(i=info.front().first+1;i<10;i++){
+                if(things[i]){
+                    can_print = 0;
+                    break;
+                }
+            }
+
+            if(can_print){
+                
+                cnt++;
+                if(info.front().second) break;
+                else{
+                    things[info.front().first]--;
+                    info.pop();
+                }
+
+            }else{
+                info.push(info.front());
+                info.pop();
+            }
+        }
+
+
+        cout << cnt << "\\n";
+
+    }
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "5佇列 撲克牌遊戲：手風琴",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "UVa 127"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+int can_move(int idx, const vector<stack<string>> &arr){
+
+    if(idx-3 >= 0 && (arr[idx-3].top()[0] == arr[idx].top()[0] || arr[idx-3].top()[1] == arr[idx].top()[1])){
+        return 3;
+    }
+
+    if(idx-1 >= 0 && (arr[idx-1].top()[0] == arr[idx].top()[0] || arr[idx-1].top()[1] == arr[idx].top()[1])){
+        return 1;
+    }
+
+
+    return 0;
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+    string s;
+
+    while(cin >> s && s != "#"){
+
+        vector<stack<string>> info;
+
+        stack<string> t;
+        t.push(s);
+        info.push_back(t);
+        t.pop();
+
+        for(i=0;i<51;i++){
+            cin >> s;
+            t.push(s);
+            info.push_back(t);
+            t.pop();
+        }
+
+
+        while(1){
+
+            bool stop = 1;
+
+            for(i=1;i<info.size();i++){
+
+                if(can_move(i, info) == 3){
+
+                    stop = 0;
+
+                    info[i-3].push(info[i].top());
+                    info[i].pop();
+
+                    if(info[i].empty()){
+                        
+                        for(j=i;j<info.size()-1;j++){
+
+                            info[j] = info[j+1];
+                        }
+                        info.pop_back();
+                    }
+
+                    break;
+
+                    
+                }else if(can_move(i, info) == 1){
+
+                    stop = 0;
+
+                    info[i-1].push(info[i].top());
+                    info[i].pop();
+
+                    if(info[i].empty()){
+                        
+                        for(j=i;j<info.size()-1;j++){
+
+                            info[j] = info[j+1];
+                        }
+                        info.pop_back();
+                    }
+
+                    break;
+
+                }
+            }
+
+            if(stop){
+                break;
+            }
+
+            
+        }
+
+
+
+        cout << info.size() << (info.size() == 1 ? " pile" : " piles") << " remaining: ";
+        
+        bool pri = 0;
+
+        for(auto stc : info){
+
+            if (pri) cout << " ";
+            cout << stc.size();
+            pri = 1;
+            
+        }
+
+        cout << "\\n";
+
+
+    }
+
+
+
+    
+    
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "5佇列 團體佇列",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "UVa 540"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main()
+{
+    int i, j, k, l = 1, i1, i2, t1, t2;
+    
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    int t, n;
+
+    while(cin >> t && t){
+
+        cout << "Scenario #" << l << "\\n";
+        l++;
+
+        vector<queue<int>> info(t);
+        queue<int> order;
+        unordered_map<int, int> group;
+
+        for(i=0;i<t;i++){
+            cin >> n;
+            for(j=0;j<n;j++){
+                cin >> t1;
+                group[t1] = i;
+            }
+        }
+
+        string dth;
+
+        while(cin >> dth && dth != "STOP"){
+
+            if(dth == "ENQUEUE"){
+
+                cin >> t1;
+
+                if(info[group[t1]].empty()){
+                    order.push(group[t1]);
+                }
+
+                info[group[t1]].push(t1);
+
+
+            }else if(dth == "DEQUEUE"){
+
+                cout << info[order.front()].front() << "\\n";
+
+                info[order.front()].pop();
+                
+                if(info[order.front()].empty()){
+                    order.pop();
+                }
+            }
+        }
+        
+        cout << "\\n";
+
+
+    }
+
+
+    
+    return 0;
+}
+`
     }
   ]
 };
