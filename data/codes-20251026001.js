@@ -6,6 +6,7 @@ window.CPP_CODE_DATA = {
     { id: "apcs",  name: "APCS" },
     { id: "uva", name: "UVa" },
     { id: "zj",   name: "ZJ" },
+    { id: "dp",  name: "動態規劃" },
     { id: "tpl",  name: "模板 / 工具" }
   ],
   items: [
@@ -4844,6 +4845,904 @@ int main(){
 
     return 0;
 }
+`
+    },
+    {
+      category: "dp",
+      title: "0-0 費波那契數列",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+//--- large number operations ---//
+
+string add(string a, string b){
+
+    if(a.size()<b.size()) swap(a, b);
+
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+
+    ll buff = 0;
+    string ans;
+
+    for(int i=0;i<b.size();i++){
+        ans.push_back(char( ((a[i]-'0')+(b[i]-'0')+buff)%10 +'0'));
+        buff = ((a[i]-'0')+(b[i]-'0')+buff)/10;
+    }
+    for(int i=b.size();i<a.size();i++){
+        ans.push_back(char( ((a[i]-'0')+buff)%10 +'0'));
+        buff = ((a[i]-'0')+buff)/10;
+    }
+    while(buff){
+        ans.push_back(char(buff%10 + '0'));
+        buff /= 10;
+    }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+//--- large number operations ---//
+
+vector<string> fibonacci_sequence(10001);
+
+
+
+string f(int n){
+    if(fibonacci_sequence[n] != "") return fibonacci_sequence[n];
+
+    if(fibonacci_sequence[n-1] == "") f(n-1);
+    if(fibonacci_sequence[n-2] == "") f(n-2);
+
+    fibonacci_sequence[n] = add(fibonacci_sequence[n-1], fibonacci_sequence[n-2]);
+
+    return fibonacci_sequence[n];
+}
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    fibonacci_sequence[0] = "0";
+    fibonacci_sequence[1] = "1";
+    fibonacci_sequence[2] = "1";
+
+    ll n;
+    while(cin >> n){
+        cout << f(n) << "\\n";
+    }
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "1-1 找錢硬幣最少數（botton up）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+constexpr int coin_amount = 3, money_max = 1000000;
+constexpr int coin[coin_amount] = {1, 3, 4};
+int dp[money_max+1] = {};
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    dp[0] = 0;
+    fill(dp+1, dp+money_max+1, INT_MAX);
+
+    int ns = 0;
+
+    int n;
+    while(cin >> n){
+        if(n > ns){
+            
+            for(i=ns+1;i<=n;i++){
+
+                int l = INT_MAX;
+
+                for(auto c : coin){
+
+                    if(i-c < 0 || dp[i-c] == -1) continue;
+                    l = min(l, dp[i-c]+1);
+
+                }
+
+                dp[i] = (l == INT_MAX ? -1 : l);
+            }
+            ns = n;
+
+        }
+
+        cout << dp[n] << "\\n";
+
+    }
+    
+
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "1-1 找錢硬幣最少數（top down）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+constexpr int coin_amount = 3, money_max = 1000000;
+constexpr int coin[coin_amount] = {1, 3, 4};
+int dp[money_max+1] = {};
+
+
+
+int amo(int v){
+
+    if(v<=money_max && dp[v] != INT_MAX) return dp[v];
+
+    int l = INT_MAX;
+    
+    for(auto c : coin){
+        if(v-c < 0) continue;
+
+        if(dp[v-c] == INT_MAX){
+            amo(v-c);
+        }
+
+        if(dp[v-c] == -1) continue;
+
+        l = min(l, dp[v-c] + 1);
+    }
+
+    
+    dp[v] = (l == INT_MAX ? -1 : l);
+    return dp[v];
+}
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    dp[0] = 0;
+    fill(dp+1, dp+money_max, INT_MAX);
+
+    int n;
+    while(cin >> n){
+        cout << amo(n) << "\\n";
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "1-2 找錢方法數",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+constexpr int coin_amount = 3, money_max = 1000000;
+constexpr int coin[coin_amount] = {1, 2, 5};
+ll dp[money_max+1] = {0};
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    int n, ns = 0;
+    dp[0] = 1;
+
+    for(auto c : coin){
+
+        for(i=c;i<=money_max;i++){
+            if (i-c < 0) continue;
+
+            dp[i] += dp[i-c];
+        }
+    }
+
+    while(cin >> n){
+
+        cout << (n <= money_max ? to_string(dp[n]) : "Are you kidding me?") << "\\n";
+
+    }
+
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-0 貪心背包/可分割背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "貪心"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+struct item
+{
+    double w, v, r;
+};
+
+struct cmp
+{
+    bool operator()(const item& a, const item& b) const{
+        return (a.r < b.r);
+    }
+};
+
+
+
+int main(){
+
+    double i, j, k, i1, i2, t1, t2;
+    
+    int n;    // amount
+    double m; // max_weight
+    cin >> n >> m;
+
+    priority_queue<item, vector<item>, cmp> info;
+    
+
+    for(i=0;i<n;i++){ //weight value
+        cin >> t1 >> t2;
+        info.push({t1, t2, t2/t1});
+    }
+
+    double nw = 0.0, nv = 0.0, tw, tv;
+
+    while(!info.empty()){
+
+        tv = info.top().v;
+        tw = info.top().w;
+
+        if(nw+tw <= m){
+            nw += tw;
+            nv += tv;
+        }else{
+            nv += tv*((m-nw)/tw);
+            break;
+        }
+
+        info.pop();
+    }
+
+    cout << fixed << setprecision(2) << nv << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-1 0/1背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    int n, W;
+    cin >> n >> W;
+
+    vector<int> v(n), w(n);
+
+    for(i=0;i<n;i++){
+        cin >> w[i] >> v[i];
+    }
+
+
+    vector<vector<int>> dp(n+1, vector<int>(W+1));
+
+    for(i=1;i<=n;i++){
+        for(j=1;j<=W;j++){
+            if(j - w[i-1] < 0) dp[i][j] = dp[i-1][j];
+            else{
+                dp[i][j] = max(
+                    dp[i-1][j],
+                    dp[i-1][j-w[i-1]] +v[i-1]
+                );
+            }
+        }
+    }
+
+
+    cout << dp[n][W] << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-1 0/1背包（滾動陣列版）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    int n, W;
+    cin >> n >> W;
+
+    vector<int> v(n), w(n);
+
+    for(i=0;i<n;i++){
+        cin >> w[i] >> v[i];
+    }
+
+
+    vector<int> dp(W+1);
+
+    for(i=0;i<n;i++){
+        for(j=W;j>=w[i];j--){
+
+            dp[j] = max(
+                dp[j],
+                dp[j-w[i]] +v[i]
+            );
+        }
+    }
+
+
+    cout << dp[W] << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-2 完全背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    int n, W;
+    cin >> n >> W;
+
+    vector<int> v(n), w(n);
+
+    for(i=0;i<n;i++){
+        cin >> w[i] >> v[i];
+    }
+
+
+    vector<int> dp(W+1);
+
+    for(i=0;i<n;i++){
+        for(j=w[i];j<=W;j++){
+
+            dp[j] = max(
+                dp[j],
+                dp[j-w[i]] +v[i]
+            );
+        }
+    }
+
+
+    cout << dp[W] << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-3 多重背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2, t3;
+    
+    int n, W;
+    cin >> n >> W;
+
+    vector<int> v, w;
+
+    for(i=0;i<n;i++){
+        cin >> t1 >> t2 >> t3; // weight value time
+        int ns = 1;
+        while(t3){
+            if(t3 > ns){
+                t3 -= ns;
+                w.push_back(t1*ns);
+                v.push_back(t2*ns);
+            }else{
+                w.push_back(t1*t3);
+                v.push_back(t2*t3);
+                break;
+            }
+            ns*=2;
+        }
+    }
+
+    vector<int> dp(W+1);
+    
+    for(i=0;i<w.size();i++){
+        for(j=W;j>=w[i];j--){
+            
+            dp[j] = max(
+                dp[j],
+                dp[j-w[i]] + v[i]
+            );
+        }
+    }
+    
+    cout << dp[W] << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-4 基礎混合背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2, t3;
+    
+    int n, W;
+    cin >> n >> W;
+
+    vector<int> v(n), w(n), t(n);
+
+    for(i=0;i<n;i++){
+        cin >> w[i] >> v[i] >> t[i]; // weight value time 
+                               // -1 == infinity
+    }
+
+    vector<int> dp(W+1);
+    
+    for(i=0;i<w.size();i++){
+
+        if(t[i] >= 1){        // countable times
+
+            int ns = 1;
+            vector<pair<int,int>> temp; // weight, value
+
+            while(t[i]){
+                if(t[i] > ns){
+                    t[i] -= ns;
+                    temp.push_back({w[i]*ns, v[i]*ns});
+                }else{
+                    temp.push_back({w[i]*t[i],v[i]*t[i]});
+                    break;
+                }
+                ns*=2;
+            }
+
+            for(auto ta : temp){
+                for(j=W;j>=ta.first;j--){
+                    dp[j] = max(
+                        dp[j],
+                        dp[j-ta.first] + ta.second
+                    );
+                }
+            }
+            
+        }else if(t[i] == -1){ // infinity times
+            for(j=w[i];j<=W;j++){
+                dp[j] = max(
+                    dp[j],
+                    dp[j-w[i]] + v[i]
+                );
+            }
+        }
+    }
+    
+    cout << dp[W] << "\\n";
+
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-5 多維背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2, t3;
+    
+    int n, W, V;
+    cin >> n >> W >> V;
+
+    vector<int> p(n), w(n), v(n);
+
+    for(i=0;i<n;i++){ // weight volume value
+        cin >> w[i] >> v[i] >> p[i];
+    }
+
+    vector<vector<int>> dp(W+1, vector<int>(V+1, 0));
+
+    for(int i=0;i<n;i++){
+
+        for(j=W;j>=w[i];j--) for(k=V;k>=v[i];k--){
+            dp[j][k] = max(
+                dp[j][k],
+                dp[j-w[i]][k-v[i]] + p[i]
+            );
+        }
+
+    }
+
+    cout << dp[W][V] << "\\n";
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "2-6 分組背包",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, t1, t2;
+
+    int n, W; // group_amount max_weight
+    cin >> n >> W;
+
+    vector<vector<int>> w(n);
+    vector<vector<int>> v(n);
+
+    for(i=0;i<n;i++){
+        while(cin >> t1 >> t2 && (t1 || t2)){ // until input => 0 0
+
+            w[i].push_back(t1);
+            v[i].push_back(t2);
+
+        }
+    }
+    
+    vector<int> dp(W+1);
+
+    for(i=0;i<n;i++){
+
+        vector<int> tdp = dp;
+
+        for(j=W;j>=0;j--){
+            
+            for(k=0;k<w[i].size();k++){
+
+                if(j-w[i][k] < 0) continue;
+
+                dp[j] = max(
+                    dp[j],
+                    tdp[j-w[i][k]] + v[i][k]
+                );
+            }
+
+        }
+
+    }
+    
+
+    cout << dp[W];
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "3-1 最長共同子序列（LCS）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    string a, b;
+    cin >> a >> b;
+
+    vector<vector<int>> dp(a.size()+1, vector<int>(b.size()+1));
+
+    for(i=1;i<=a.size();i++){
+        for(j=1;j<=b.size();j++){
+            if(a[i-1] == b[j-1]){
+                dp[i][j] = dp[i-1][j-1] + 1;
+            }else{
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    
+    string lcs;
+    i = a.size(); j = b.size();
+
+    while(i>0 && j>0){
+        if(a[i-1] == b[j-1]){
+            lcs+=a[i-1];
+            i--; j--;
+        }else if(dp[i-1][j] >= dp[i][j-1]){
+            i--;
+        }else{
+            j--;
+        }
+    }
+
+    reverse(lcs.begin(),lcs.end());
+
+
+    cout << dp[a.size()][b.size()] << "\\n";
+    cout << "LCS: " << lcs << "\\n";
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "3-2 最長遞增子序列（LIS）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    vector<int> info;
+    while(cin >> k){
+        info.push_back(k);
+    }
+
+    vector<int> dp(info.size(), 1), p(info.size(), -1);
+    
+    for(i=0;i<info.size();i++){
+        for(j=0;j<i;j++){
+            if (info[i] > info[j]){
+                if(dp[j]+1 > dp[i]){
+                    dp[i] = dp[j]+1;
+                    p[i] = j;
+                }
+            }
+        }
+    }
+
+    int ans = INT_MIN;
+    vector<int> ansl;
+
+    for(i=0;i<dp.size();i++){
+
+        if(dp[i] > ans){
+            ans = dp[i];
+            ansl.clear();
+            ansl.push_back(i);
+        }else if(dp[i] == ans){
+            ansl.push_back(i);
+        }
+    }
+
+    cout << ans << "\\n";
+
+    vector<vector<int>> LIS;
+
+    for(auto l : ansl){
+
+        vector<int> s;
+
+        for(int cur = l;cur!=-1;cur = p[cur]){
+            s.push_back(info[cur]);
+        }
+
+        reverse(s.begin(), s.end());
+
+        LIS.push_back(s);
+    }
+
+    sort(LIS.begin(),LIS.end());
+
+
+    cout << "LIS:\\n";
+    for(auto s : LIS){
+        cout << "    ";
+        for(auto o : s){
+            cout << o << " ";
+        }
+        cout << "\\n";
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "3-2 最長遞增子序列（LIS，tails版）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    vector<int> info;
+    while(cin >> k){
+        info.push_back(k);
+    }
+    vector<int> p(info.size(), -1);
+
+    vector<int> t, tl;
+
+    for(i=0;i<info.size();i++){
+        int x = info[i];
+        auto it = lower_bound(t.begin(), t.end(), x); // > using lower_bound ; >= using upper_bound
+        if(it == t.end()){
+            t.push_back(x);
+            if(!tl.empty())
+                p[i] = tl.back();
+            tl.push_back(i);
+            
+        }else{
+            *it = x;
+            tl[it - t.begin()] = i;
+            if(it != t.begin())
+                p[i] = tl[it - t.begin()-1];
+        }
+    }
+
+
+    vector<int> ans;
+    for(int cur = tl.back();cur!=-1;cur=p[cur]){
+        ans.push_back(info[cur]);
+    }
+    reverse(ans.begin(), ans.end());
+    
+
+
+    cout << t.size() << "\\n";
+    cout << "LIS:\\n    ";
+    for(auto o : ans){
+        cout << o << " ";
+    }
+    cout << "\\n";
+    
+    return 0;
+}
+`
+    },
+    {
+      category: "dp",
+      title: "3-2 最長遞增子序列（LIS，10行解）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-10-30",
+      tags: ["基礎", "dp"],
+      code:
+`# include <bits/stdc++.h>
+int main(){
+    int k; std::vector<int> info, tails;
+    while(std::cin >> k) info.push_back(k);
+    for(auto x : info){
+        auto it = lower_bound(tails.begin(), tails.end(), x);
+        if(it == tails.end()) tails.push_back(x);
+        else *it = x;}
+    std::cout << tails.size() << "\\n";
+    return 0;}
 `
     }
   ]
