@@ -1,4 +1,3 @@
-// C++ only data; edit this file to新增/刪除/修改資料。
 window.CPP_CODE_DATA = {
   categories: [
     { id: "sctb", name: "學校課本" },
