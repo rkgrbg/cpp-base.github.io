@@ -5825,7 +5825,7 @@ int main(){
       category: "schw",
       title: "5佇列 02 撲克牌遊戲：手風琴",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-10-30",
+      updated: "2025-10-31",
       tags: ["基礎", "UVa 127"],
       code:
 `# include <bits/stdc++.h>
@@ -5888,11 +5888,7 @@ int main(){
 
                     if(info[i].empty()){
                         
-                        for(j=i;j<info.size()-1;j++){
-
-                            info[j] = info[j+1];
-                        }
-                        info.pop_back();
+                        info.erase(info.begin()+i);
                     }
 
                     break;
@@ -5907,11 +5903,7 @@ int main(){
 
                     if(info[i].empty()){
                         
-                        for(j=i;j<info.size()-1;j++){
-
-                            info[j] = info[j+1];
-                        }
-                        info.pop_back();
+                        info.erase(info.begin()+i);
                     }
 
                     break;
@@ -5953,6 +5945,7 @@ int main(){
 
     return 0;
 }
+
 `
     },
     {
