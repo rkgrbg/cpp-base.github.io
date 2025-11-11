@@ -6031,6 +6031,409 @@ int main()
     return 0;
 }
 `
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 01 小球落下",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎", "UVa 679"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+bitset<1048576> tree;
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int T;
+    cin >> T;
+    while(T--){
+
+        tree.reset();
+
+        int D, I;
+        cin >> D >> I;
+
+        int CriticalValue = (1 << (D-1));
+        int nl;
+
+        while(I--){
+            
+            nl = 1;
+            while(nl < CriticalValue){
+                if(tree[nl]){
+                    tree[nl] = ! tree[nl];
+                    nl = 2*nl + 1;
+                }else{
+                    tree[nl] = ! tree[nl];
+                    nl *= 2;
+                }
+            }
+        }
+
+
+
+
+        cout << nl << "\\n";
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 01 小球落下（測資加強版A）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎", "UVa 679"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+bitset<20> ans;
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    
+    
+    int T;
+    cin >> T;
+    
+    
+    
+    while(T--){
+        
+        ans.reset();
+        
+        int D, I;
+        cin >> D >> I;
+
+        
+        
+        int r = 0, l = 1 << (D-1), idx=-1;
+
+        I = (I-1) % (1 << (D-1)) +1;
+        
+        while(++idx < D-1){
+
+            if (I > (r+l)/2){
+
+                ans[idx] =1;
+                r = (r+l)/2;
+
+            }else{
+                
+                l = (r+l)/2;
+            
+            }
+        }
+        
+        ans[D-1] = 1;
+        
+        cout << ans.to_ulong() << "\\n";
+    }
+    
+    
+    
+    
+    return 0;
+
+}
+
+
+`
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 01 小球落下（測資加強版B）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎", "UVa 679"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    
+    
+    int T;
+    cin >> T;
+    
+    
+    
+    while(T--){
+        
+        int D, I;
+        cin >> D >> I;
+
+        int pos = 1;
+
+        while(--D){
+
+
+            if(I & 1){
+
+                pos *= 2;
+                I = (I+1)/2;
+            }else{
+
+                pos = pos *2 +1;
+                I /= 2;
+            }
+
+
+
+        }
+
+        
+        
+        cout << pos << '\\n';
+
+        
+    }
+    
+    
+    
+    
+    return 0;
+
+}
+`
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 02 二元搜尋樹高度",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+struct node
+{
+    int data, h;
+    node *left = nullptr, *right = nullptr;
+};
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+
+
+
+    cin >> k;
+    node * root = new node{k, 1, nullptr, nullptr};
+    
+
+    int mh = 1;
+    
+    while(cin >> k){
+
+        auto it = root;
+        
+
+        while(1){
+            if(k > it -> data){
+                if(it -> right != nullptr){
+                    it = it -> right;
+                }else{
+                    it -> right = new node{k, it -> h + 1, nullptr, nullptr};
+                    mh = max(it -> h + 1, mh);
+                    break;
+
+                }
+            }else{
+                if(it -> left != nullptr){
+                    it = it -> left;
+                }else{
+                    it -> left = new node{k, it -> h + 1, nullptr, nullptr};
+                    mh = max(it -> h + 1, mh);
+                    break;
+                }
+            }
+        }
+
+        
+
+
+    }
+
+    
+    
+    cout << mh;
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 03 血緣關係",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎", "APCS 2016-03-04"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> t[100000];
+bitset<100000> vis;
+
+int md = 0, wmd;
+
+void dfs(int u, int d){
+
+    vis[u] = 1;
+
+    if(d > md){
+        md = d;
+        wmd = u;
+    }
+
+
+    for(auto v : t[u]){
+        if(!vis[v]){
+            dfs(v, d+1);
+        }
+    }
+
+    return;
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    int n;
+    cin >> n;
+
+    for(i=0;i<n-1;i++){
+        cin >> t1 >> t2;
+        t[t1].push_back(t2);
+        t[t2].push_back(t1);
+    }
+
+    dfs(0,0);
+
+    md = 0;
+    vis.reset();
+
+    dfs(wmd,0);
+
+    cout << md;
+    
+    
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "6樹狀結構 04 樹狀圖分析",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-11",
+      tags: ["基礎", "APCS 2017-10-03"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+ll H = 0;
+int root, n;
+vector<int> t;
+queue<int> leaves;
+vector<int> h;
+
+
+
+void dfs(int v, int d){
+
+    if(h[v] >= d) return;
+
+    h[v] = d;
+
+    if (!t[v]){
+        root = v;
+        return;
+    }
+
+    dfs(t[v], d+1);
+
+
+    return;
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2, m;
+
+    cin >> n;
+
+    t.resize(n+1);
+    h.assign(n+1, -1);
+    
+
+    for(i=1;i<=n;i++){
+
+        cin >> k;
+        if (!k)
+            leaves.push(i);
+
+        while(k--){
+            cin >> m;
+            t[m] = i;
+        }
+    }
+
+    while(!leaves.empty()){
+
+        dfs(leaves.front(), 0);
+        leaves.pop();
+
+    }
+
+    cout << root << "\\n";
+    
+    for(i=1;i<=n;i++){
+        H+=h[i];
+    }
+    
+
+    cout << H << "\\n";
+
+    return 0;
+}
+`
     }
   ]
 };
