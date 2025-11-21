@@ -6426,6 +6426,441 @@ int main(){
     return 0;
 }
 `
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 01 城市旅遊",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> t[800 +5];
+bitset<800 +5> vis;
+
+void dfs(int u){
+
+    vis[u] = 1;
+    for(auto v : t[u]){
+        if(!vis[v]){
+            dfs(v);
+        }
+    }
+
+    return;
+
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n, m;
+    cin >> n >> m;
+
+    for(i=0;i<m;i++){
+        cin >> t1 >> t2;
+        t[t1].push_back(t2);
+    }
+
+    int a, b;
+    cin >> a >> b;
+
+    dfs(a);
+    
+    if(vis[b]) cout << "Yes";
+    else cout << "No";
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 02 油田",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎", "UVa 572"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int m, n;
+char oil[100][100];
+bitset<10000> vis;
+
+
+void dfs(int x, int y){
+
+    vis[x *n+ y] = 1;
+    
+    if(x+1 < m  && y+1 < n && oil[x+1][y+1] =='@' && !vis[(x+1) *n+ y+1]){
+        dfs(x+1, y+1);
+    }
+    if(x+1 < m  && y-1 > -1 && oil[x+1][y-1] =='@' && !vis[(x+1) *n+ y-1]){
+        dfs(x+1, y-1);
+    }
+    if(x-1 > -1  && y+1 < n && oil[x-1][y+1] =='@' && !vis[(x-1) *n+ y+1]){
+        dfs(x-1, y+1);
+    }
+    if(x-1 > -1  && y-1 > -1 && oil[x-1][y-1] =='@' && !vis[(x-1) *n+ y-1]){
+        dfs(x-1, y-1);
+    }
+    if(y+1 < n && oil[x][y+1] =='@' && !vis[x *n+ y+1]){
+        dfs(x, y+1);
+    }
+    if(y-1 > -1 && oil[x][y-1] =='@' && !vis[x *n+ y-1]){
+        dfs(x, y-1);
+    }
+    if(x+1 < m && oil[x+1][y] =='@' && !vis[(x+1) *n+ y]){
+        dfs(x+1, y);
+    }
+    if(x-1 > -1 && oil[x-1][y] =='@' && !vis[(x-1) *n+ y]){
+        dfs(x-1, y);
+    }
+
+
+}
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    char c;
+
+    while(cin >> m >> n && m && n){
+
+
+        int cnt = 0;
+
+        for(i=0;i<m;i++){
+            for(j=0;j<n;j++){
+                cin >> oil[i][j];
+            }
+        }
+
+        for(i=0;i<m;i++){
+            for(j=0;j<n;j++){
+                if(oil[i][j] == '@' && !vis[i *n+ j]){
+                    dfs(i, j);
+                    cnt++;
+                }
+                
+            }
+        }
+
+        cout << cnt << "\\n";
+
+
+        vis.reset();
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 03 小群體",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎", "APCS 2017-03-02"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> t[100000];
+bitset<100000> vis;
+
+
+void bfs(int u){
+
+    queue<int> q;
+
+    q.push(u);
+    vis[u] = 1;
+
+    while(!q.empty()){
+
+        for(auto v : t[q.front()]){
+            if(!vis[v]){
+                q.push(v);
+                vis[v] = 1;
+            }
+        }
+
+        q.pop();
+
+    }
+
+
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    int n;
+    cin >> n;
+
+    for(i=0;i<n;i++){
+        cin >> t1;
+        t[i].push_back(t1);
+        t[t1].push_back(i);
+    }
+
+    int cnt = 0;
+
+    for(i=0;i<n;i++){
+        if(!vis[i]){
+            bfs(i);
+            cnt++;
+        }
+    }
+
+    cout << cnt;
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 04 二分圖",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎", "107資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> t[(int)10e5];
+bitset<(int)10e5> vis, color; // as true = a
+
+int A = 0, a = 0, b = 0;
+bool legal = 1;
+
+void dfs(int u, bool is_a){
+
+    if(!legal){
+        return;
+    }
+
+    vis[u] = 1;
+    color[u] = is_a;
+    if(is_a){
+        a++;
+    }else{
+        b++;
+    }
+
+    for(auto x : t[u]){
+
+        if(!vis[x]){
+            dfs(x, !is_a);
+        }else{
+            if(color[x] != !is_a){
+                legal = 0;
+            }
+        }
+
+    }
+    return;
+}
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n, m;
+    cin >> n >> m;
+
+    for(i=0;i<m;i++){
+        cin >> t1 >> t2;
+        t[t1-1].push_back(t2-1);
+        t[t2-1].push_back(t1-1);
+    }
+
+    for(i=0;i<n;i++){
+        if(!vis[i]){
+            a = 0;
+            b = 0;
+            dfs(i, 1);
+            if(!legal){
+                cout << "0";
+                return 0;
+            }
+            A+=min(a, b);
+        }
+    }
+
+
+
+    cout << (A ? A : 1);
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 05 觀光景點",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎",  "107資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<pair<int, int>> t[5000 +5]; // pot value
+vector<int> value;
+bitset<5000 +5> vis;
+int cnt = 0, q;
+
+void dfs(int u, int p, int ev){
+
+    vis[u] = 1;
+    value[u] = min(value[p], ev);
+    if(value[u] >= q && value[u] != INT_MAX){
+        cnt++;
+    }
+    for(auto v : t[u]){
+        if(!vis[v.first]){
+            dfs(v.first, u, v.second);
+        }
+    }
+
+    return;
+
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2, t3;
+    
+    int n, vk;
+    cin >> n >> vk >> q;
+    vk--;
+
+    for(i=0;i<n-1;i++){
+        cin >> t1 >> t2 >> t3;
+        t[t1-1].push_back({t2-1, t3});
+        t[t2-1].push_back({t1-1, t3});
+    }
+
+    value.resize(n);
+    value[vk] = INT_MAX;
+
+    dfs(vk, vk, INT_MAX);
+    
+    cout << cnt << "\\n";
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "7圖形結構 06 馬步問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-21",
+      tags: ["基礎",  "106資能競賽", "回溯", "枚舉"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const int dx[8] = {-2, -2, -1, -1,  1,  1,  2,  2};
+const int dy[8] = {-1,  1, -2,  2, -2,  2, -1,  1};
+
+vector<vector<int>> info;
+vector<int> ans;
+int n;
+
+
+void dfs(int x, int y, int t){ // consider as SST
+
+    info[x][y] = t;
+
+    if(t == n*3){
+        bool chushileabei = 0, bk = 0;
+
+        for(int i=0;i<3;i++){
+            for(int j=0;j<n;j++){
+                if(ans[i *n+ j] != info[i][j]){
+                    if(ans[i *n+ j] > info[i][j]){
+                        chushileabei = 1;
+                    }
+                    bk = 1;
+                    break;
+                }
+            }
+            if(bk) break;
+        }
+
+        if(chushileabei){
+            for(int i=0;i<3;i++){
+                for(int j=0;j<n;j++){
+                    ans[i *n+ j] = info[i][j];
+                }
+            }
+        }
+        info[x][y] = 0;
+        return;
+    }
+
+    for(int i=0;i<8;i++){
+        if(x+dx[i]>=0 && x+dx[i]<3 && y+dy[i]>=0 && y+dy[i]<n && info[x+dx[i]][y+dy[i]] == 0){
+            dfs(x+dx[i], y+dy[i], t+1);
+        }
+    }
+
+    info[x][y] = 0;
+
+    return;
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    cin >> n;
+
+    info.assign(3, vector<int>(n));
+    ans.assign(n*3, INT_MAX);
+
+    dfs(0, 0, 1);
+
+    if(ans[0] == INT_MAX){
+        cout << 0 << "\\n";
+    }else{
+        for(auto x : ans){
+            cout << x << " ";
+        }
+    }
+    
+
+    return 0;
+}
+`
     }
   ]
 };
