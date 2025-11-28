@@ -1843,7 +1843,7 @@ int main(){
       category: "sctb",
       title: "習題10-3 Agar.io",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-09-18",
+      updated: "2025-11-28",
       tags: ["基礎", "104資能競賽"],
       code:
 `# include <bits/stdc++.h>
@@ -1857,43 +1857,129 @@ int main(){
     int i, j, k, l = 0, i1, i2, t1, t2;
     
 
-    int n, m;
-
+    int n, m, a, b;
     cin >> n >> m;
 
-    vector<int> balls;
-    int value[10000] = {0};
+    vector<pair<int,vector<int>>> balls(n, {10, vector<int>()});
 
-    for(i=0;i<m;i++){
-        cin >> t1 >> t2;
-
-        if(value[t1] == 0){
-            value[t1] = 10;
-            balls.push_back(t1);
-        }
-
-        if(value[t2] == 0){
-            value[t2] = 10;
-            balls.push_back(t2);
-        }
-
-        if(value[t1] > value[t2])
-            value[t1] += value[t2];
-
-        else if(value[t1] < value[t2])
-            value[t2] += value[t1];
-
-        else
-            value[t1] += value[t2];
-
-        
+    for(i=0;i<n;i++){
+        balls[i].second.push_back(i+1);
     }
 
-    cout << ((value[t1] > value[t2]) ? t1 : t2) << "\\n";
-    
-    sort(balls.begin(),balls.end());
+    for(i=0;i<m;i++){
+        cin >> a >> b;
+        a--;b--;
 
-    for(auto b : balls) cout << b << " ";
+        if(balls[a].first>=balls[b].first){
+            balls[a].first += balls[b].first;
+            balls[b].first = -1;
+            for(auto x : balls[b].second){
+                balls[a].second.push_back(x);
+            }
+        }else{
+            balls[b].first += balls[a].first;
+            balls[a].first = -1;
+            for(auto x : balls[a].second){
+                balls[b].second.push_back(x);
+            }
+        }
+    }
+
+    pair<int,vector<int>> man = {-1, vector<int>()};
+    int man_id;
+
+    for(i=0;i<n;i++){
+        if(balls[i].first > man.first){
+            man = balls[i];
+            man_id = i+1;
+        }
+    }
+
+    cout << man_id << "\\n";
+
+    sort(man.second.begin(), man.second.end());
+
+    for(auto x : man.second){
+        cout << x << " ";
+    }
+
+    
+
+    return 0;
+}`
+    },
+    {
+      category: "sctb",
+      title: "習題10-3 Agar.io（測資加強版）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎", "104資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> parent;
+
+int find(int n){
+    
+    if(parent[n] != n)
+        parent[n] = find(parent[n]);
+
+    return parent[n];
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+
+    int n, m, a, b;
+    cin >> n >> m;
+
+    vector<int> value(n, 10);
+    parent.resize(n);
+    iota(parent.begin(), parent.end(), 0);
+
+    for(i=0;i<m;i++){
+        cin >> a >> b;
+
+        a--;b--;
+
+        if(value[a] >= value[b]){
+            parent[b] = a;
+            value[a] += value[b];
+            value[b] = -1;
+        }else{
+            parent[a] = b;
+            value[b] += value[a];
+            value[a] = -1;
+        }
+    }
+
+    for(i=0;i<n;i++){
+        find(i);
+    }
+
+    int man_id, man_value = -1;
+    for(i=0;i<n;i++){
+        if(value[i] > man_value){
+            man_value = value[i];
+            man_id = i;
+        }
+    }
+
+    cout << man_id+1 << "\\n";
+
+    for(i=0;i<n;i++){
+        if(parent[i] == man_id)
+            cout << i+1 << " ";
+    }
+
+
+    
 
     return 0;
 }`
@@ -6857,6 +6943,315 @@ int main(){
         }
     }
     
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "8排序 01 連號或不連號",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎",  "106資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    
+    int n;
+    cin >> n;
+
+
+    vector<int> info;
+    for(i=0;i<n;i++){
+        cin >> k;
+        info.push_back(k);
+    }
+
+
+    sort(info.begin(), info.end());
+
+    cout << info[0] << " " << info[n-1] << " ";
+
+    for(i=0;i<n;i++){
+        if(i-1 >= 0 && info[i-1] +1 != info[i]){
+            cout << "no";
+            return 0;
+        }
+    }
+
+    cout << "yes";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "8排序 02 字元頻率",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎",  "UVa10062"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+bool cmp(const pair<int,char> &a, const pair<int,char> &b){
+
+    /*
+    if(a.first != b.first) return a.first < b.first;
+    else return a.second > b.second;
+    */
+
+    return (a.first != b.first) ? (a.first < b.first) : (a.second > b.second);
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    string s;
+    bool first_case = true;
+    while(getline(cin, s)){
+
+        if(!first_case) cout << "\\n";
+        first_case = 0;
+
+        sort(s.begin(), s.end());
+
+        vector<pair<int,char>> items;
+
+        for(auto c : s){
+            if(items.size() == 0 || items[items.size()-1].second != c){
+                items.push_back({1, c});
+            }else{
+                items[items.size()-1].first++;
+            }
+        }
+
+        sort(items.begin(), items.end(), cmp);
+
+        for(auto p : items){
+            cout << int(p.second) << " " << p.first << "\\n";
+        }
+
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "8排序 03 Agar.io",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎",  "104資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+
+    int n, m, a, b;
+    cin >> n >> m;
+
+    vector<pair<int,vector<int>>> balls(n, {10, vector<int>()});
+
+    for(i=0;i<n;i++){
+        balls[i].second.push_back(i+1);
+    }
+
+    for(i=0;i<m;i++){
+        cin >> a >> b;
+        a--;b--;
+
+        if(balls[a].first>=balls[b].first){
+            balls[a].first += balls[b].first;
+            balls[b].first = -1;
+            for(auto x : balls[b].second){
+                balls[a].second.push_back(x);
+            }
+        }else{
+            balls[b].first += balls[a].first;
+            balls[a].first = -1;
+            for(auto x : balls[a].second){
+                balls[b].second.push_back(x);
+            }
+        }
+    }
+
+    pair<int,vector<int>> man = {-1, vector<int>()};
+    int man_id;
+
+    for(i=0;i<n;i++){
+        if(balls[i].first > man.first){
+            man = balls[i];
+            man_id = i+1;
+        }
+    }
+
+    cout << man_id << "\\n";
+
+    sort(man.second.begin(), man.second.end());
+
+    for(auto x : man.second){
+        cout << x << " ";
+    }
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "8排序 03 Agar.io（測資加強版）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎",  "104資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+vector<int> parent;
+
+int find(int n){
+    
+    if(parent[n] != n)
+        parent[n] = find(parent[n]);
+
+    return parent[n];
+}
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+
+    int n, m, a, b;
+    cin >> n >> m;
+
+    vector<int> value(n, 10);
+    parent.resize(n);
+    iota(parent.begin(), parent.end(), 0);
+
+    for(i=0;i<m;i++){
+        cin >> a >> b;
+
+        a--;b--;
+
+        if(value[a] >= value[b]){
+            parent[b] = a;
+            value[a] += value[b];
+            value[b] = -1;
+        }else{
+            parent[a] = b;
+            value[b] += value[a];
+            value[a] = -1;
+        }
+    }
+
+    for(i=0;i<n;i++){
+        find(i);
+    }
+
+    int man_id, man_value = -1;
+    for(i=0;i<n;i++){
+        if(value[i] > man_value){
+            man_value = value[i];
+            man_id = i;
+        }
+    }
+
+    cout << man_id+1 << "\\n";
+
+    for(i=0;i<n;i++){
+        if(parent[i] == man_id)
+            cout << i+1 << " ";
+    }
+
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "8排序 04 飛天桑妮",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-11-28",
+      tags: ["基礎",  "105資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+struct tree
+{
+    int x, y, h;
+};
+
+
+bool cmp(const tree &a, const tree &b){
+
+    int sqda = a.x*a.x + a.y*a.y, sqdb = b.x*b.x + b.y*b.y;
+
+    if(sqda == sqdb){
+        return a.h > b.h;
+    }else{
+        return sqda < sqdb;
+    }
+}
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+    cin >> n;
+
+    vector<tree> info(n);
+
+    for(i=0;i<n;i++){
+        cin >> info[i].x >> info[i].y >> info[i].h;
+    }
+
+    sort(info.begin(), info.end(), cmp);
+
+    int ans = 0, nm = 0;
+
+    for(auto x : info){
+        nm = max(x.h, nm);
+        ans = max(nm-x.h, ans);
+    }
+
+    cout << ans;
+
 
     return 0;
 }
