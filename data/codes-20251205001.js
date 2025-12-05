@@ -1988,7 +1988,7 @@ int main(){
       category: "sctb",
       title: "習題11-1 二分搜尋",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-09-18",
+      updated: "2025-12-05",
       tags: ["基礎"],
       code:
 `# include <bits/stdc++.h>
@@ -2011,25 +2011,25 @@ int main(){
     int search;
     cin >> search;
 
-    int l = 0, r = n, mid, cnt = 0;
+    int l = 0, r = n-1, mid, cnt = 0;
 
-    while( l < r ){
+    while( l <= r ){
         cnt++;
         mid = l + (r-l)/2;
 
 
         if(info[mid] == search){
-            cout << mid+1 << " " << cnt;
+            cout << mid << " " << cnt;
             return 0;
         }else if(info[mid] < search){
             l = mid+1;
         }else{
-            r = mid;
+            r = mid-1;
         }
 
     }
 
-    cout << "Error of not found.";
+    cout << "not found " << cnt;
 
     return 0;
 }`
@@ -2038,7 +2038,7 @@ int main(){
       category: "sctb",
       title: "習題11-2 二分法求解",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-09-18",
+      updated: "2025-12-05",
       tags: ["基礎"],
       code:
 `# include <bits/stdc++.h>
@@ -2072,7 +2072,7 @@ int main(){
 
     mid = (l+r) / 2.0;
 
-    cout << fixed << setprecision(8) << mid;
+    cout << fixed << setprecision(6) << mid;
     
 
     return 0;
@@ -2082,7 +2082,7 @@ int main(){
       category: "sctb",
       title: "習題11-3 人員調動",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-09-18",
+      updated: "2025-12-05",
       tags: ["基礎", "107資能競賽"],
       code:
 `# include <bits/stdc++.h>
@@ -2100,7 +2100,7 @@ int main(){
     cin >> N;
     while(N--){
 
-        vector<int> info[1000];
+        vector<int> info[1001];
 
         int m, cnt = 0;
         cin >> m;
@@ -7252,6 +7252,450 @@ int main(){
 
     cout << ans;
 
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 01 二分搜尋",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    
+    int n;
+    cin >> n;
+
+    int info[10000];
+    for(i=0;i<n;i++) cin >> info[i];
+
+    int search;
+    cin >> search;
+
+    int l = 0, r = n-1, mid, cnt = 0;
+
+    while( l <= r ){
+        cnt++;
+        mid = l + (r-l)/2;
+
+
+        if(info[mid] == search){
+            cout << mid << " " << cnt;
+            return 0;
+        }else if(info[mid] < search){
+            l = mid+1;
+        }else{
+            r = mid-1;
+        }
+
+    }
+
+    cout << "not found " << cnt;
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 02 二分法求解",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+double f(double x){
+
+    return 2.0 - exp(x);
+}
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    const double TOL = 1e-8;
+
+
+    double l = 0.0, r = 1.0;
+
+    double mid;
+
+    while((r-l)/2.0 > TOL){
+        mid = (r+l)/2.0;
+        if(f(mid) == 0.0) break;
+        if(f(l) * f(mid) < 0) r = mid;
+        else l = mid;
+    }
+
+    mid = (l+r) / 2.0;
+
+    cout << fixed << setprecision(6) << mid;
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 03 完美購書計畫",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎", "UVa11057"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+    int n, m;
+    vector<int> info;
+    while(cin >> n){
+
+        info.clear();
+
+        info.resize(n);
+
+        for(i=0;i<n;i++){
+            cin >> info[i];
+        }
+
+        cin >> m;
+
+        sort(info.begin(), info.end());
+
+        int a = 0, b = 0;
+
+        for(i=0;i<n;i++){
+
+
+            if(info[i] >= m) break;
+
+            int t = info[i];
+            if(i){
+                if(i == n-1){
+                    info[i] = info[i-1];
+                }else{
+                    info[i] = info[i+1];
+                }
+            }else{
+                info[i] = info[i+1];
+            }
+
+            int l = 0, r = n, mid;
+            bool ct = 0;
+
+            
+
+            if(binary_search(info.begin(), info.end(), m-t)){
+                if(!a){
+                    a = min(t, m-t);
+                    b = max(t, m-t);
+                }else{
+                    if(b-a > max(t, m-t) - min(t, m-t)){
+                        a =  min(t, m-t);
+                        b =  max(t, m-t);
+                    }
+                }
+            }
+
+
+
+            info[i] = t;
+
+
+
+
+        }
+
+        cout << "Peter should buy books whose prices are " << a << " and " << b << ".\\n\\n";
+
+        
+
+    }
+
+
+
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 04 人員調動",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎", "107資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+    int N;
+    cin >> N;
+    while(N--){
+
+        vector<int> info[1001];
+
+        int m, cnt = 0;
+        cin >> m;
+
+        for(i=0;i<m;i++){
+            int a, b;
+            cin >> a >> b;
+
+            bool ex = 0;
+
+            for(j=0;j<info[b].size();j++){
+                if(info[b][j] == a){
+                    cnt++;
+                    info[b][j] = -1;
+                    ex = 1;
+                    break;
+                }
+            }
+
+            if(!ex){
+                info[a].push_back(b);
+            }
+        }
+
+        cout << cnt << "\\n";
+
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 05 大黑馬",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎", "104資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int p, n;
+
+struct team
+{
+    vector<int> sum = vector<int>(3);
+    vector<vector<int>> player;
+};
+
+vector<team> info; // idx == seedID
+
+bool a_can_win_b(int a, int b, int a_situ, int b_situ){
+
+    int al = 0, ar = 2*p, bl = 0, br = 2*p, cnt = 0;
+
+    while(al <= ar){
+        
+        if(info[a].player[al][a_situ] > info[b].player[bl][b_situ] || (info[a].player[al][a_situ] == info[b].player[bl][b_situ] && info[a].sum[a_situ] > info[b].sum[b_situ])){
+            al++;
+            bl++;
+            cnt++;
+        }else if(info[a].player[ar][a_situ] > info[b].player[br][b_situ] || (info[a].player[ar][a_situ] == info[b].player[br][b_situ] && info[a].sum[a_situ] > info[b].sum[b_situ])){
+            ar--;
+            br--;
+            cnt++;
+        }else{
+            ar--;
+            bl++;
+        }
+
+
+
+    }
+
+    return cnt > p;
+}
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    cin >> p >> n;
+
+    info.resize(n+1);
+
+
+    int s;
+
+    for(i=1;i<=n;i++){
+
+        cin >> s;
+
+        info[s].player.resize(2*p+1, vector<int>(3));
+
+
+        for(j=0;j<2*p+1;j++){
+            cin >> info[s].player[j][1];
+            info[s].sum[1] += info[s].player[j][1];
+        }
+
+        for(j=0;j<2*p+1;j++){
+            cin >> info[s].player[j][0];
+            info[s].sum[0] += info[s].player[j][0];
+        }
+
+        for(j=0;j<2*p+1;j++){
+            cin >> info[s].player[j][2];
+            info[s].sum[2] += info[s].player[j][2];
+        }
+
+    }
+    
+
+    for(i=n;i;i--){
+        
+        bool is_legal = 1;
+
+        for(j=1;j<=n;j++){
+
+            if(!a_can_win_b(i, j, 1, 1)){
+                is_legal = 0;
+                break;
+            }
+
+        }
+
+        if(is_legal){
+            cout << i << " ";
+            break;
+        }
+
+    }
+
+    for(i=n;i;i--){
+        
+        bool is_legal = 1;
+
+        for(j=1;j<=n;j++){
+
+            if(!a_can_win_b(i, j, 0, 2)){
+                is_legal = 0;
+                break;
+            }
+
+        }
+
+        if(is_legal){
+            cout << i;
+            break;
+        }
+
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "9搜尋 06 主機排程",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-05",
+      tags: ["基礎", "102資能競賽"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+struct work
+{
+    int b, e;
+    int core, ram, bw;
+};
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2, t3, t4, t5, t6;
+    
+    int N, d, s;
+    cin >> N >> d;
+
+    vector<work> info;
+
+    while(N--){
+
+        info.clear();
+        
+        cin >> s;
+
+        for(i=0;i<s;i++){
+
+            cin >> t1 >> t2 >> t3 >> t4 >> t5 >> t6;
+
+            info.push_back({t1*24+t2, t1*24+t2+t3, t4, t5, t6});
+            info.push_back({(d+t1)*24+t2, (d+t1)*24+t2+t3, t4, t5, t6});
+        }
+        cin >> k;
+
+        int tc, tr, tb, core = 0, ram = 0, bw = 0;
+
+        for(i=24;i<=2*d*24;i++){
+
+            tc = tr = tb = 0;
+
+            for(auto w : info){
+                if(w.b<=i && i<w.e){
+                    tc += w.core;
+                    tr += w.ram;
+                    tb += w.bw;
+                }
+            }
+
+            core = max(core, tc);
+            ram = max(ram, tr);
+            bw = max(bw, tb);
+            
+        }
+
+
+        cout << core  << " " << ram  << " " << bw << "\\n";
+    }
 
     return 0;
 }
