@@ -7705,7 +7705,7 @@ int main(){
       category: "schw",
       title: "9搜尋 03 完美購書計畫（迭代器版）",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-12-05",
+      updated: "2025-12-06",
       tags: ["基礎", "UVa11057"],
       code:
 `# include <bits/stdc++.h>
@@ -7736,7 +7736,7 @@ int main(){
         sort(info.begin(), info.end());
 
 
-        auto it = lower_bound(info.begin(), info.end(), (int)m/2);
+        auto it = lower_bound(info.begin(), info.end(), int(0.5 + double(m)/2.0));
         bool fnd = 0;
 
         while(it != info.end() && !fnd){
@@ -7757,7 +7757,7 @@ int main(){
 
             
             if(binary_search(info.begin(), info.end(), m-t)){
-                cout << "Peter should buy books whose prices are " << min(m-t, t) << " and " << max(m-t, t) << ".\\n\\n";
+                cout << "Peter should buy books whose prices are " << m-t << " and " << t << ".\\n\\n";
                 fnd = 1;
             }
 
