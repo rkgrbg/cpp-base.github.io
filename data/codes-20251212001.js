@@ -6999,7 +6999,7 @@ int main(){
       title: "8排序 02 字元頻率",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-11-28",
-      tags: ["基礎",  "UVa10062"],
+      tags: ["基礎",  "UVa 10062"],
       code:
 `# include <bits/stdc++.h>
 using namespace std;
@@ -7358,7 +7358,7 @@ int main(){
       title: "9搜尋 03 完美購書計畫",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-12-05",
-      tags: ["基礎", "UVa11057"],
+      tags: ["基礎", "UVa 11057"],
       code:
 `# include <bits/stdc++.h>
 using namespace std;
@@ -7706,7 +7706,7 @@ int main(){
       title: "9搜尋 03 完美購書計畫（迭代器版）",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
       updated: "2025-12-06",
-      tags: ["基礎", "UVa11057"],
+      tags: ["基礎", "UVa 11057"],
       code:
 `# include <bits/stdc++.h>
 using namespace std;
@@ -7778,6 +7778,456 @@ int main(){
 
 
 
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 01 最大乘積",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "UVa 11059"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+    while(cin >> n){
+        l++;
+        vector<int> info;
+
+        for(i=0;i<n;i++){
+            cin >> t1;
+            info.push_back(t1);
+        }
+
+        ll ans = LLONG_MIN;
+
+        for(i=0;i<n;i++){
+            for(j=0;j<n;j++){ //meaning i to j multiply
+                
+                ll nv = 1;
+                
+                for(k=i;k<=j;k++){
+                    nv *= info[k];
+                }
+
+                ans = max(ans, nv);
+            }
+        }
+        
+
+        if(ans < 0)
+            cout << "Case #" << l << ": The maximum product is " << 0 << ".\\n\\n";
+        
+        else
+            cout << "Case #" << l << ": The maximum product is " << ans << ".\\n\\n";
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 01 最大乘積（測資加強版）",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "UVa 11059", "Kadane演算法"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+    while(cin >> n){
+        l++;
+        vector<ll> info;
+
+        for(i=0;i<n;i++){
+            cin >> t1;
+            info.push_back(t1);
+        }
+
+        ll maxProd = 1, minProd = 1, ans = LLONG_MIN;
+
+        for(auto x : info){
+
+            if(x < 0) swap(maxProd, minProd);
+
+            maxProd = max(x, maxProd * x);
+            minProd = min(x, minProd * x);
+
+            ans = max(maxProd, ans);
+            
+        }
+        
+
+        if(ans < 0)
+            cout << "Case #" << l << ": The maximum product is " << 0 << ".\\n\\n";
+        
+        else
+            cout << "Case #" << l << ": The maximum product is " << ans << ".\\n\\n";
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 02 除法",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "UVa 725"],
+      code:
+`#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+bool ci(int a, int b){
+    
+    bitset<10> app;
+
+    for(int i=0;i<5;i++){
+        app[a%10] = 1;
+        a /= 10;
+    }
+    for(int i=0;i<5;i++){
+        app[b%10] = 1;
+        b /= 10;
+    }
+    return (app.count() == 10);
+}
+
+
+int main()
+{
+    int i, j, k, l = 0, i1, i2, t1=INT_MIN, t2;
+
+    int n;
+
+    while(cin >> n && n){
+        
+        bool pr = 0;
+
+
+        for(int f=1234;f<=98765/n;f++){
+            int a = f * n;
+            if(!ci(a, f)) continue;
+
+            cout << setw(5) << setfill('0') << a
+                 << " / "
+                 << setw(5) << setfill('0') << f
+                 << " = " << n << "\\n";
+            pr = 1;
+        }
+
+        if(!pr)
+            cout << "There are no solutions for " << n << ".\\n";
+
+        cout << "\\n";
+
+    }
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 03 採蘑菇攻略問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "102資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+    cin >> n;
+
+    int nmax = 0, ans = 0;
+
+    for(i=0;i<n;i++){
+        cin >> k;
+        nmax = max(nmax+k, k);
+        ans = max(nmax, ans);
+    }
+
+    cout << ans;
+
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 04 回文日期問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "106資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+const int days[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+
+int rt(string time){
+
+    if(time.size() == 6){
+
+        if (time[2] != time[3]) return 0;
+        if (!(time[4]-'0') || !(time[5]-'0')) return 0;
+
+        return 1;
+
+    }else if(time.size() == 7){
+        
+        int cnt = 0;
+
+        // 1 - 2
+
+        int day = (time[5]-'0')*10+time[6]-'0';
+
+        if((time[4]-'0') != 2 && (time[4]-'0')){
+
+            if(day <= days[(time[4]-'0')-1])
+                cnt++;
+
+
+        }else if(time[4]-'0'){
+
+            int year = (time[0]-'0')*1000 + (time[1]-'0')*100 + (time[2]-'0')*10 + (time[3]-'0');
+
+            if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+
+                if(day <= 29)
+                    cnt++;
+                
+            }else{
+
+                if(day <= 28)
+                    cnt++;
+
+            }
+
+        }
+
+
+
+        // 2 - 1
+
+        int month = (time[4]-'0')*10+time[5]-'0';
+
+        if(month <= 12 && month)
+            cnt++;
+
+
+        return cnt;
+    }else{
+
+
+        int month = (time[4]-'0')*10+time[5]-'0';
+        int day = (time[6]-'0')*10+time[7]-'0';
+
+        if(month && month <= 12){
+            if(month == 2){
+
+                int year = (time[0]-'0')*1000 + (time[1]-'0')*100 + (time[2]-'0')*10 + (time[3]-'0');
+
+                if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+                    if(day <= 29) return 1;
+                }else{
+                    if(day <= 28) return 1;
+                }
+
+            }else{
+                if(day <= days[month-1]) return 1;
+            }
+        }
+
+
+        return 0;
+    }
+
+}
+
+
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+    cin >> n;
+
+    while(n--){
+
+        string year;
+        cin >> year;
+
+        string p1 = year + string(1, year[1]) + string(1, year[0]);
+        string p2 = year + string(1, year[2]) + string(1, year[1]) + string(1, year[0]);
+        string p3 = year + string(1, year[3]) + string(1, year[2]) + string(1, year[1]) + string(1, year[0]);
+
+        cout << rt(p1) + rt(p2) + rt(p3) << " ";
+        if(rt(p1)) cout << p1 << " ";
+        if(rt(p2) == 2) cout << p2 << " " << p2 << " ";
+        if(rt(p2) == 1) cout << p2 << " ";
+        if(rt(p3)) cout << p3 << " ";
+        cout << "\\n";
+
+    }
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "10枚舉 05 巧克力擺盒",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-12",
+      tags: ["基礎", "102資能競賽"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+/*
+   P B Y
+S  0 1 2
+C  3 4 5
+T  6 7 8
+
+*/
+
+map<pair<char, char>, int> ctn = {
+    {{'P','S'}, 0}, {{'P','C'}, 1}, {{'P','T'}, 2},
+    {{'B','S'}, 3}, {{'B','C'}, 4}, {{'B','T'}, 5},
+    {{'Y','S'}, 6}, {{'Y','C'}, 7}, {{'Y','T'}, 8}
+};
+
+
+struct limit
+{
+    int kind;
+    vector<vector<int>> cont;
+};
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+    char f, s;
+    int n; 
+    cin >> n;
+
+    vector<limit> req(n);
+
+    for(i=0;i<n;i++){
+        cin >> req[i].kind;
+        for(j=0;j<req[i].kind;j++){
+
+            cin >> f >> s;
+
+            if(f != '?' && s != '?'){
+                req[i].cont.push_back(vector<int>{ctn[{f, s}]});
+
+            }else if(f == '?' && s == '?'){
+                req[i].cont.push_back(vector<int>{0,1,2,3,4,5,6,7,8});
+
+            }else{
+                if(f != '?'){
+                    req[i].cont.push_back(vector<int>{ctn[{f, 'S'}], ctn[{f, 'C'}], ctn[{f, 'T'}]});
+
+                }else{
+                    req[i].cont.push_back(vector<int>{ctn[{'P', s}], ctn[{'B', s}], ctn[{'Y', s}]});
+
+                }
+            }
+
+        }
+    }
+
+    
+    vector<int> info(9);
+    iota(info.begin(), info.end(), 1);
+
+    bool legal = 1, innerLegal = 0;
+
+    do{
+        legal = 1;
+        for(auto x : req){
+            innerLegal = 0;
+            if(x.kind == 2){
+                for(auto t1 : x.cont[0]){
+                    for(auto t2 : x.cont[1]){
+                        if(info[t2] - info[t1] == 1 && info[t1] != 3 && info[t1] != 6){
+                            innerLegal = 1;
+                        }
+                    }
+                }
+                if(!innerLegal){
+                    legal = 0;
+                    break;
+                }
+            }else{
+                for(auto t1 : x.cont[0]){
+                    for(auto t2 : x.cont[1]){
+                        for(auto t3 : x.cont[2]){
+                            if(info[t3] - info[t2] == 1 && info[t2] - info[t1] == 1 && (info[t1] == 1 || info[t1] == 4 || info[t1] == 7)){
+                                innerLegal = 1;
+                            }
+                        }
+                    }
+                }
+                if(!innerLegal){
+                    legal = 0;
+                    break;
+                }
+            }
+        }
+
+        if(legal) l++;
+        
+    }while(next_permutation(info.begin(), info.end()));
+    
+    cout << l << "\\n";
 
     return 0;
 }
