@@ -2522,7 +2522,7 @@ int main(){
       category: "sctb",
       title: "習題13-3 基地台",
       description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
-      updated: "2025-09-18",
+      updated: "2025-12-27",
       tags: ["基礎", "APCS 2017-03-04", "貪心", "二分搜"],
       code:
 `#include <bits/stdc++.h>
@@ -2566,7 +2566,7 @@ int main()
     sort(pos.begin(), pos.end());
 
 
-    int l = 0, r = (pos[pos.size()-1] - pos[0])+1, mid;
+    int l = 1, r = (pos[pos.size()-1] - pos[0])+1, mid;
 
     while(l < r){
         
@@ -8228,6 +8228,302 @@ int main(){
     }while(next_permutation(info.begin(), info.end()));
     
     cout << l << "\\n";
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "11貪心 01 加總的代價",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-27",
+      tags: ["基礎", "UVa 10954", "貪心"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+    
+    int n;
+
+    while(cin >> n && n){
+
+
+        ll cost = 0;
+        priority_queue<int, vector<int>, greater<int>> info;
+
+        for(i=0;i<n;i++){
+            cin >> t1;
+            info.push(t1);
+        }
+
+        while(info.size() > 1){
+
+            t1 = info.top();
+            info.pop();
+
+            t2 = info.top();
+            info.pop();
+
+            info.push(t1+t2);
+
+            cost += t1 + t2;
+        }
+
+        cout << cost << "\\n";
+    }
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "11貪心 02 排隊買飲料",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-27",
+      tags: ["基礎", "貪心"],
+      code:
+`# include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, i1, i2, t1, t2;
+    
+    
+    int n, m;
+    cin >> n >> m;
+
+    priority_queue<int, vector<int>, greater<int>> clerk;
+    
+
+
+    for(i=0;i<m;i++){
+        cin >> k;
+        clerk.push(k);
+    }
+
+    for(i=0;i<n-m;i++){
+        cin >> k;
+        clerk.push(clerk.top() + k);
+        clerk.pop();
+    }
+
+    while(clerk.size() > 1) clerk.pop();
+
+    cout << clerk.top();
+
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "11貪心 03 基地台",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-27",
+      tags: ["基礎", "APCS 2017-03-04", "貪心", "二分搜"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+int n, k;
+vector<int> pos;
+
+
+bool ci(int r){
+
+    int np = -1;
+
+    int cnt = 0;
+    for(auto p : pos){
+
+        if(p <= np) continue;
+
+        np = p + r;
+        cnt++;
+
+    }
+
+    return cnt <= k;
+}
+
+
+
+int main()
+{
+    int i, j, i1, i2, t1=INT_MIN, t2;
+
+    cin >> n >> k;
+    for(i=0;i<n;i++){
+        cin >> t1;
+        pos.push_back(t1);
+    }
+
+
+    sort(pos.begin(), pos.end());
+
+
+    int l = 1, r = (pos[pos.size()-1] - pos[0])+1, mid;
+
+    while(l < r){
+        
+        mid = l+(r-l)/2;
+
+        if(ci(mid)) r=mid;
+        else l = mid+1;
+
+    }
+
+    cout << l;
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "11貪心 04 背包置物問題",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-27",
+      tags: ["基礎", "107資能競賽", "貪心"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+inline int lb(const bitset<21> &b){
+    for(int i=0;i<21;i++){
+        if(b[i]) return i;
+    }
+    return -1;
+}
+
+int main(){
+
+    int i, j, l = 0, i1, i2, t1, t2;
+
+    int n, m = 0, k;
+    cin >> n;
+
+    string s;
+    vector<int> daily;
+
+    cin.ignore();
+    getline(cin, s);
+
+    for(i=0;i<s.size();i++){
+        if(s[i] != ' '){
+            if(i+1<s.size() && s[i+1] != ' '){
+                daily.push_back((s[i] - '0')*10 + (s[i+1] - '0'));
+                m++;
+                i++;
+            }else{
+                daily.push_back(s[i] - '0');
+                m++;
+            }
+        }
+    }
+
+    cin >> k;
+
+    bitset<21> bp, tp;
+
+    for(i=0;i<m;i++){
+
+        if(bp.count() < k){
+            bp[daily[i]] = 1;
+            continue;
+        }
+
+        if(bp[daily[i]]){
+            continue;
+        }
+
+        tp = bp;
+        bool find = 0;
+
+        if(tp.count() == 1){
+            l++;
+            bp[lb(tp)] = 0;
+            bp[daily[i]] = 1;
+            continue;
+        }
+
+        for(j=i+1;j<m && !find;j++){
+            tp[daily[j]] = 0;
+            if(tp.count() == 1){
+                find = 1;
+                l++;
+                bp[lb(tp)] = 0;
+                bp[daily[i]] = 1;
+            }
+        }
+
+        if(find) continue;
+
+        bp[lb(tp)] = 0;
+        bp[daily[i]] = 1;
+        l++;
+    }
+
+
+    cout << l;
+    
+
+    return 0;
+}
+`
+    },
+    {
+      category: "schw",
+      title: "11貪心 05 醜數",
+      description: "這段程式碼很高冷，他沒有多說什麼...，只留下了一聲不屑的「哼」。",
+      updated: "2025-12-27",
+      tags: ["基礎", "UVa 136", "dp", "NOP"],
+      code:
+`#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+
+
+
+int main(){
+
+    int i, j, k, l = 0, i1, i2, t1, t2;
+
+
+    int n;
+    cin >> n;
+
+    int _2 = 0, _3 = 0, _5 = 0;
+    vector<int> ug(n);
+
+    ug[0] = 1;
+
+    for(i=1;i<n;i++){
+        ug[i] = min(ug[_2]*2,min(ug[_3]*3, ug[_5]*5));
+        
+        if(ug[i] == ug[_2]*2) _2++;
+        if(ug[i] == ug[_3]*3) _3++;
+        if(ug[i] == ug[_5]*5) _5++;
+    }
+
+    cout << ug.back();
 
     return 0;
 }
